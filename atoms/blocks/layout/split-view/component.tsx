@@ -360,7 +360,7 @@ export const SplitViewBlock: BlockComponent = ({ props, children, block, context
                   borderRadius: 6,
                   padding: '10px 12px',
                   marginBottom: 2,
-                  backgroundColor: active ? 'var(--pw-color-surface, #fafafa)' : 'transparent',
+                  backgroundColor: active ? 'var(--pw-color-surface-muted, #f4f4f5)' : 'transparent',
                   color: 'var(--pw-color-text, #09090b)',
                   borderLeft: active
                     ? '3px solid var(--pw-color-primary, #18181b)'
@@ -441,7 +441,7 @@ export const SplitViewBlock: BlockComponent = ({ props, children, block, context
                     style={{
                       alignSelf: 'flex-start',
                       maxWidth: '78%',
-                      backgroundColor: 'var(--pw-color-surface, #fafafa)',
+                      backgroundColor: 'var(--pw-color-surface-muted, #f4f4f5)',
                       borderRadius: 10,
                       padding: '8px 12px',
                     }}

@@ -828,10 +828,6 @@ function contrastRatio(a, b) {
 
 function checkContrast(file, theme) {
   const colors = { ...(theme?.colors ?? {}) }
-  // Mirror card↔surface the way the appearance cascade does, so what is
-  // measured is what renders.
-  if (colors.card && !colors.surface) colors.surface = colors.card
-  if (colors.surface && !colors.card) colors.card = colors.surface
 
   for (const [fg, bg] of CONTRAST_PAIRS) {
     const ratio = contrastRatio(colors[fg], colors[bg])
@@ -1929,12 +1925,7 @@ let themeAtomCount = 0
     }
   }
 
-  const colorsOf = (theme) => {
-    const c = { ...(theme?.colors ?? {}) }
-    if (c.card && !c.surface) c.surface = c.card
-    if (c.surface && !c.card) c.card = c.surface
-    return c
-  }
+  const colorsOf = (theme) => ({ ...(theme?.colors ?? {}) })
 
   const judge = (file, mode, theme) => {
     const c = colorsOf(theme)
