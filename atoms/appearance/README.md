@@ -16,7 +16,7 @@ in a surface's blocks at 8 (`RAW_COLOR_CAP`); above that the surface either
 binds to tokens / `color-mix()` derivations or declares
 `themeIndependent: true` and leaves the theme rhythm. Derivation idioms that
 keep a thesis while staying themeable: glass = `color-mix(in srgb,
-var(--pw-color-surface) 12%, transparent)`, faded ink = `color-mix(in srgb,
+var(--pw-color-card) 12%, transparent)`, faded ink = `color-mix(in srgb,
 var(--pw-color-text) 62%, transparent)`, offset shadow = `6px 6px 0
 var(--pw-color-text)`, marker = `var(--pw-color-accent)` with
 `--pw-color-on-accent` ink.
