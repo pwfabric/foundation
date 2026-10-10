@@ -30,10 +30,10 @@
     ]
   },
   "devDependencies": {
-    "@pwfabric/contracts": "1.0.0-rc.0",
-    "@pwfabric/core": "1.0.0-rc.0",
-    "@pwfabric/pack": "1.0.0-rc.0",
-    "@pwfabric/runtime": "1.0.0-rc.0",
+    "@pwfabric/contracts": "1.0.0-rc.1",
+    "@pwfabric/core": "1.0.0-rc.1",
+    "@pwfabric/pack": "1.0.0-rc.1",
+    "@pwfabric/runtime": "1.0.0-rc.1",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
     "@types/react": "^19.0.0",
