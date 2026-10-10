@@ -1,0 +1,122 @@
+{
+  "id": "theme-midnight",
+  "kind": "ui-appearance",
+  "version": "1.0.1",
+  "category": "ui",
+  "name": "Midnight",
+  "state": "stable",
+  "description": "Deep navy ground, light ink — the one hand-authored dark palette.",
+  "tags": [
+    "theme",
+    "appearance",
+    "dark"
+  ],
+  "theme": {
+    "colors": {
+      "primary": "#818cf8",
+      "secondary": "#a78bfa",
+      "accent": "#c4b5fd",
+      "background": "#0f172a",
+      "card": "#1e293b",
+      "text": "#e2e8f0",
+      "textMuted": "#94a3b8",
+      "border": "#334155",
+      "error": "#f87171",
+      "success": "#4ade80",
+      "warning": "#fbbf24",
+      "info": "#38bdf8",
+      "textOnPrimary": "#0f172a",
+      "surface": "#1e293b"
+    },
+    "border": {
+      "radius": "0.25rem",
+      "width": "1px",
+      "style": "solid",
+      "radiusLarge": "0.5rem",
+      "radiusSmall": "0.125rem",
+      "radiusXl": "0.5rem",
+      "radius2xl": "0.75rem",
+      "radiusFull": "9999px"
+    },
+    "typography": {
+      "fontFamily": "\"DM Sans\", \"Segoe UI\", system-ui, sans-serif",
+      "headingFontFamily": "\"DM Sans\", \"Segoe UI\", system-ui, sans-serif",
+      "monoFontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+      "baseFontSize": "15px",
+      "headingWeight": "800",
+      "headingLineHeight": "1.1",
+      "letterSpacing": "-0.02em",
+      "bodyLineHeight": "1.45",
+      "fontSizeSm": "0.875rem",
+      "fontSizeXs": "0.75rem",
+      "fontSizeLg": "1.125rem",
+      "fontSizeXl": "1.25rem",
+      "fontSize2xl": "1.5rem",
+      "fontSize3xl": "1.875rem",
+      "fontSize4xl": "2.25rem",
+      "bodyWeight": "400",
+      "bodyLetterSpacing": "-0.005em"
+    },
+    "spacing": {
+      "base": "0.85rem",
+      "xs": "0.2125rem",
+      "sm": "0.425rem",
+      "md": "0.85rem",
+      "lg": "1.275rem",
+      "xl": "1.7rem",
+      "xxl": "2.55rem"
+    },
+    "shadows": {
+      "card": "0 4px 16px rgba(0,0,0,0.4)",
+      "button": "0 0 0 1px rgba(129,140,248,0.3)",
+      "sm": "0 1px 2px rgba(0,0,0,0.3)",
+      "md": "0 4px 8px rgba(0,0,0,0.35)",
+      "lg": "0 12px 20px rgba(0,0,0,0.45)",
+      "xl": "0 24px 40px rgba(0,0,0,0.55)"
+    },
+    "motion": {
+      "durationFast": "150ms",
+      "durationNormal": "300ms",
+      "durationSlow": "600ms",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easingBounce": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    },
+    "layout": {
+      "gap": "0px",
+      "padding": "0px",
+      "containerMaxWidth": "1440px",
+      "gridGap": "12px",
+      "sectionPaddingY": "clamp(2rem, 4vw, 3rem)",
+      "sectionPaddingX": "clamp(1rem, 3vw, 1.5rem)"
+    },
+    "focus": {
+      "ringColor": "#818cf8",
+      "ringWidth": "2px",
+      "ringOffset": "2px"
+    },
+    "zIndex": {
+      "sticky": 50,
+      "nav": 100,
+      "dropdown": 200,
+      "drawer": 300,
+      "modal": 400,
+      "toast": 500
+    }
+  },
+  "knowledge": {
+    "purpose": "Midnight theme — DM Sans 800 headings, sharp corners, dense dark scale. A complete token set: palette, heading and body voice, corner radius scale, spacing rhythm and motion; a surface wears it whole.",
+    "useCases": [
+      "Giving a surface the Midnight look (from the theme picker)",
+      "Pick it as a starting point and edit token values one by one"
+    ],
+    "composesWith": [
+      "platform/persistence",
+      "platform/entities",
+      "platform/navigation"
+    ],
+    "antiPatterns": [
+      "Pinning colours in block props — theme tokens already cascade",
+      "Expecting two themes on one surface — a surface carries a single token set"
+    ]
+  }
+}

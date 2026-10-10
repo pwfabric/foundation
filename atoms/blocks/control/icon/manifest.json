@@ -1,0 +1,99 @@
+{
+  "id": "control.icon",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "control",
+  "name": "icon",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Single inline SVG icon from the bundled icon set, used as a glyph or decoration",
+    "useCases": [
+      "Leading or trailing icon inside a button",
+      "Visual cue beside a list item",
+      "Status indicator next to text"
+    ],
+    "composesWith": [
+      "control.button",
+      "control.link",
+      "control.badge",
+      "data.list",
+      "text.alert",
+      "callout"
+    ],
+    "antiPatterns": [
+      "Custom illustrations — use media.image",
+      "Logo display — use the logo prop on layout.navbar",
+      "Large hero artwork — use media.image or media.video"
+    ],
+    "implementation": "Further use cases:\n- Accessibility-marked decorative glyph"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "default": "circle",
+        "jsonSchema": {
+          "type": "string",
+          "default": "circle"
+        },
+        "bindable": false
+      },
+      {
+        "name": "size",
+        "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+        "required": false,
+        "default": "md",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md"
+        },
+        "bindable": false
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "strokeWidth",
+        "type": "number",
+        "required": false,
+        "default": 2,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 4,
+          "default": 2
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "name": "circle",
+      "size": "md",
+      "strokeWidth": 2
+    },
+    "canHaveChildren": false,
+    "icon": "◈",
+    "traits": [
+      "inline",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

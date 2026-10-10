@@ -1,0 +1,446 @@
+{
+  "id": "layout.navbar",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "layout",
+  "name": "navbar",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Top-of-page navigation bar: logo, link list, and an optional right-aligned utility cluster. The persistent top chrome of a surface.",
+    "useCases": [
+      "Primary site header on a marketing surface",
+      "App shell top bar with main nav links",
+      "Logged-in dashboard header with profile CTA"
+    ],
+    "composesWith": [
+      "layout.section",
+      "control.link",
+      "control.button",
+      "platform/navigation"
+    ],
+    "antiPatterns": [
+      "Side navigation — navbar is horizontal-only; use a layout.container with vertical links instead",
+      "Embedding full forms inside the navbar — keep it lean (the built-in showSearch box is the only field that belongs here)",
+      "Multiple navbars on the same surface",
+      "Authoring `account` in a receipt or pattern — the runner injects the real visitor; a hand-written one is a fake session"
+    ],
+    "implementation": "Top-of-page navigation bar with logo, link list, and an optional right-aligned utility cluster (search box, social icons, an optional ghost/text secondary CTA followed by the primary CTA, avatar) plus a second co-brand wordmark — sticky-capable. Each link may carry EITHER a flat dropdown submenu (items: [{label, href}]) OR a multi-column mega-panel (megaColumns: [{heading?, items: [{label, href?, icon?, description?}]}] plus an optional trailing feature tile {title, description?, href?, icon?}). The cluster can also lead with a free info-slot (rightInfo: [{label?, value, icon?}]) of small muted non-interactive status text (e.g. weather '24°C London', currency 'USDTRY 27.01'), rendered before search/CTA. The secondary CTA pairs a ghost 'Log In' with a primary 'Get Started'.\n\nFurther use cases:\n- Sticky navbar that follows on scroll for long pages\n- Company portal top bar with search, social icons, and a co-branded second wordmark\n- Product/solutions mega-menu: a top-level link opening a wide multi-column panel of grouped destinations plus a highlighted feature tile\n- Portal header with a free info-slot showing live status (weather, exchange rate, server time) before the search box\n\nAccount control: when the runner injects `account`, the decorative avatar is replaced by the shared account menu (blocks/_shared-account-menu.tsx) — a WAI-ARIA menu button (aria-haspopup/expanded, arrow keys, Escape returns focus, outside press closes) opening a card with name + email, Profile (profileHref), `links`, a divider and Sign out. Signed out it renders a \"Sign in\" button. Sign in/out are emitted as block:click with payload.action {type: \"auth:signIn\" | \"auth:signOut\"}; the runner handles them (inert renders report the click without the action). `avatarName`/`avatarSrc` still work for static mock-ups without an account."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "logoText",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "logoSrc",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "links",
+        "type": "[{label, href, items?: [{label, href}], megaColumns?: [{heading?, items: [{label, href?, icon?, description?}]}], feature?: {title, description?, href?, icon?}}]",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "href": {
+                "type": "string"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "href": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ]
+                }
+              },
+              "megaColumns": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "heading": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "href": {
+                            "type": "string"
+                          },
+                          "icon": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "label"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "items"
+                  ]
+                }
+              },
+              "feature": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "icon": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ]
+          },
+          "default": []
+        },
+        "bindable": false
+      },
+      {
+        "name": "sticky",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "alignment",
+        "type": "\"left\" | \"center\" | \"right\"",
+        "required": false,
+        "default": "right",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "default": "right"
+        },
+        "bindable": false
+      },
+      {
+        "name": "showCTA",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "ctaLabel",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "ctaHref",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "secondaryCtaLabel",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "secondaryCtaHref",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "avatarName",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "avatarSrc",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "showSearch",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "searchPlaceholder",
+        "type": "string",
+        "required": false,
+        "default": "Search…",
+        "jsonSchema": {
+          "type": "string",
+          "default": "Search…"
+        },
+        "bindable": false
+      },
+      {
+        "name": "searchStateKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "State key the search query is written to when the visitor presses Enter — a data source filtering on {{state.<key>}} re-queries. The submit also emits a block:click event with payload {action:\"search\", value}."
+        },
+        "bindable": false
+      },
+      {
+        "name": "socialLinks",
+        "type": "[{icon, href}]",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "href": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "icon"
+            ]
+          },
+          "default": []
+        },
+        "bindable": false
+      },
+      {
+        "name": "secondaryLogoText",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "rightInfo",
+        "type": "[{label?, value, icon?}]",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "default": []
+        },
+        "bindable": false
+      },
+      {
+        "name": "logoHref",
+        "type": "string",
+        "required": false,
+        "description": "Destination for the logo link; omitted, the logo renders unlinked.",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "account",
+        "type": "{state: 'signed-in' | 'signed-out', name?, email?, avatarSrc?, profileHref?, profileLabel?, links?: [{label, href}], signInLabel?, signOutLabel?}",
+        "required": false,
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "enum": [
+                "signed-in",
+                "signed-out"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "description": "Display name (falls back to email)."
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatarSrc": {
+              "type": "string"
+            },
+            "profileHref": {
+              "type": "string",
+              "description": "App route of the profile page, already rewritten by the runner."
+            },
+            "profileLabel": {
+              "type": "string",
+              "description": "Localised label of the Profile menu entry. Default \"Profile\"; a folded bottom-bar tab keeps its own label."
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ]
+              },
+              "description": "Extra account-menu entries, listed after Profile."
+            },
+            "signInLabel": {
+              "type": "string",
+              "description": "Default \"Sign in\"."
+            },
+            "signOutLabel": {
+              "type": "string",
+              "description": "Default \"Sign out\"."
+            }
+          },
+          "required": [
+            "state"
+          ],
+          "description": "The published app's visitor, INJECTED BY THE RUNNER — do not author it. Signed in: an avatar menu button (name beside it on wide screens) opening profile, links and sign out. Signed out: a \"Sign in\" button. Actions leave as payload.action {type:\"auth:signIn\"|\"auth:signOut\"}. Supersedes avatarName/avatarSrc."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "logoText": "",
+      "links": [],
+      "sticky": false,
+      "alignment": "right",
+      "showCTA": false,
+      "ctaLabel": "",
+      "showSearch": false,
+      "searchPlaceholder": "Search…",
+      "socialLinks": [],
+      "rightInfo": []
+    },
+    "canHaveChildren": false,
+    "icon": "☰",
+    "traits": []
+  },
+  "tags": [
+    "tier:structure"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "content.placeholder",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "content",
+  "name": "placeholder",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Holds the place of a block, capability, connector, pattern or icon the app needs but the catalogue does not carry yet, until a generator or a marketplace install fills it",
+    "useCases": [
+      "A block need the composer could not meet from installed packs",
+      "A section that waits on a capability or connector the app has not installed",
+      "Keeping a page's layout honest while a missing piece is ordered"
+    ],
+    "composesWith": [
+      "layout.section",
+      "layout.grid",
+      "container.card"
+    ],
+    "antiPatterns": [
+      "An empty image slot — media.image keeps its own layout with an empty or placeholder src",
+      "Loading state — use data.skeleton",
+      "Empty-state messaging — use the empty-state pattern",
+      "A tile the author could fill today with an installed block"
+    ],
+    "implementation": "Themeable tile (card ground, dashed border) at least minHeight tall (120px default), full width. Editor: the label plus 'Still to come — <kind> · <need>'. Live: the same ground and nothing else — no text, no call to action, aria-hidden. Root carries data-block-type=\"placeholder\", data-pw-need=\"<need>\" and data-pw-need-kind=\"<kind>\" so the canvas and gates find the unmet need."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A short human name for what will stand here, e.g. 'Booking calendar'. Shown in the editor only; the live tile carries no text.",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "need",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The need key the composer recorded for this unmet need; exposed as data-pw-need.",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "kind",
+        "type": "\"block\" | \"capability\" | \"connector\" | \"pattern\" | \"icon\"",
+        "required": false,
+        "default": "block",
+        "description": "What kind of atom the need asks for.",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "block",
+            "capability",
+            "connector",
+            "pattern",
+            "icon"
+          ],
+          "default": "block"
+        },
+        "bindable": false
+      },
+      {
+        "name": "minHeight",
+        "type": "number | string",
+        "required": false,
+        "description": "Minimum height of the tile (number = px, or any CSS length). Match the size of what will replace it so the layout does not jump. Default 120px.",
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "label": "",
+      "need": "",
+      "kind": "block"
+    },
+    "canHaveChildren": false,
+    "icon": "⬚",
+    "traits": []
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

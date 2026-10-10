@@ -1,0 +1,63 @@
+{
+  "name": "RestConnector",
+  "kind": "connector",
+  "connection": "rest",
+  "configSchema": {
+    "fields": [
+      {
+        "key": "baseUrl",
+        "type": "string",
+        "label": "API address",
+        "description": "The common part of the address records are read from, including any shared path prefix — e.g. 'api.example.com/v1'. The scheme is optional ('https://api.example.com/v1' means the same). The source name is appended to it.",
+        "required": true,
+        "group": "SOURCE"
+      },
+      {
+        "key": "itemsPath",
+        "type": "string",
+        "label": "Records location",
+        "description": "Name of the field in the response body that holds the array of records — such as 'data', 'results', 'items'. Use dots for a nested field: 'payload.rows'.",
+        "required": true,
+        "group": "YANIT"
+      },
+      {
+        "key": "idField",
+        "type": "string",
+        "label": "ID field",
+        "description": "Name of the field that uniquely identifies each record — 'id' in most APIs.",
+        "required": true,
+        "group": "YANIT"
+      }
+    ]
+  },
+  "_comment": "Generic REST connector. This file is installed as the connector's manifest exactly as written. connection and configSchema list the settings a person fills in when connecting: where the API lives, where the list of records sits in the response, and which field identifies a record. engine is a request template, not code; nothing in this file runs. The connector only reads from the external API; it never writes to it.",
+  "knowledge": {
+    "purpose": "Generic engine that reads records from the user's OWN HTTP API. The source name (entityType) is appended to the address; where the record array sits in the response and which field is the ID come from the connection settings, so an API that answers {data:[..]} and one that answers {results:[..]} share the same atom.",
+    "useCases": [
+      "List data from the company's own REST service (products, branches, listings)",
+      "Reading from a public API (catalogue, exchange rates, weather)",
+      "Reading through a gateway placed in front of an internal service"
+    ],
+    "capabilities": [
+      "query (read; pagination via the engine's own query string)"
+    ],
+    "configSchema": "connection.config = { baseUrl, itemsPath, idField } — the source name comes from entityType and is appended to the address",
+    "antiPatterns": [
+      "A vendor API with its own connector engine (its own paging, site resolution or field flattening) — that engine belongs in the vendor's provider pack, not in this atom",
+      "Entities in the host's own database — that is the platform/entities capability's job; this atom is for external APIs",
+      "Writing credentials such as keys or passwords into the connection settings — credentials live in the project's auth binding and NEVER enter the pack; these fields say WHERE the source is, not WHO we are"
+    ]
+  },
+  "engine": {
+    "host": "{baseUrl}",
+    "path": "/{entityType}",
+    "auth": {
+      "type": "none"
+    },
+    "read": {
+      "items": "{itemsPath}",
+      "id": "{idField}",
+      "flatten": "*"
+    }
+  }
+}

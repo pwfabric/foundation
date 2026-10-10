@@ -1,0 +1,54 @@
+{
+  "id": "platform/entities",
+  "kind": "capability",
+  "version": "1.0.0",
+  "name": "Entity System",
+  "description": "Schema-driven entity definitions, CRUD store, connector abstraction",
+  "tags": [
+    "entities",
+    "schema",
+    "crud"
+  ],
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Schema-first entity layer that defines collection shapes and exposes typed CRUD against a connector",
+    "useCases": [
+      "Declare an app collection like Customer, Product, Order",
+      "Validate incoming records against a Zod schema before save",
+      "Plug a different storage backend (postgres, in-memory, external API) without changing call sites",
+      "Render a list/detail surface bound to an entity collection"
+    ],
+    "composesWith": [
+      "platform/persistence",
+      "data.list",
+      "data.repeater",
+      "form.form"
+    ],
+    "antiPatterns": [
+      "Storing transient UI state as an entity — keep it in form/local state until submit",
+      "Embedding business workflow inside entity schemas — use platform/interaction rules",
+      "Joins across apps — entities are isolated per app by contract",
+      "Registering an external, read-only REST source (e.g. a vendor's list API) as an EntityDefinition — it doesn't live in the host's own store; use a connector + platform/persistence instead"
+    ]
+  },
+  "config": {
+    "fields": [
+      {
+        "key": "enableLifecycleHooks",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": true,
+        "label": "Enable Lifecycle Hooks",
+        "description": "Enable entity lifecycle hook callbacks"
+      },
+      {
+        "key": "enableEventBridge",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": false,
+        "label": "Enable Event Bridge",
+        "description": "Emit entity events to the platform event bridge"
+      }
+    ]
+  }
+}

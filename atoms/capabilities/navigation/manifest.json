@@ -1,0 +1,53 @@
+{
+  "id": "platform/navigation",
+  "kind": "capability",
+  "version": "1.0.0",
+  "name": "Navigation",
+  "description": "Multi-page surface navigation, base path configuration, and route handling",
+  "tags": [
+    "navigation",
+    "routing",
+    "url"
+  ],
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Resolve, link, and navigate between surfaces inside an app — handles base paths, route params, and history",
+    "useCases": [
+      "Multi-page app with routed surfaces",
+      "Internal link from one surface to another (button.href, link.href)",
+      "Pagination next/prev with deep-linkable URLs",
+      "Stepper or wizard that survives a refresh by syncing step to the URL"
+    ],
+    "composesWith": [
+      "control.link",
+      "control.button",
+      "control.breadcrumb",
+      "layout.navbar"
+    ],
+    "antiPatterns": [
+      "Hard-coded full URLs that break when the app moves to another base path",
+      "Client-only state for things that should be deep-linkable (filter, page number)",
+      "Calling window.location.* directly instead of going through the capability"
+    ]
+  },
+  "config": {
+    "fields": [
+      {
+        "key": "basePath",
+        "type": "string",
+        "required": false,
+        "defaultValue": "/",
+        "label": "Base Path",
+        "description": "Base path prefix for all routes"
+      },
+      {
+        "key": "trailingSlash",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": false,
+        "label": "Trailing Slash",
+        "description": "Append trailing slash to URLs"
+      }
+    ]
+  }
+}

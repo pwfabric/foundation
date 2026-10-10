@@ -1,0 +1,169 @@
+{
+  "id": "form.form",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "form",
+  "name": "form",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Form container that wires its inputs to the platform/entities capability and emits submit. Submitted values are saved as a record in the app's own data, under the entity type the form is bound to.",
+    "useCases": [
+      "Login or sign-up form",
+      "Contact or feedback submission",
+      "Entity create or edit form",
+      "Multi-step form (wizard): ONE form wraps every step; step buttons (button.action setState step) sit inside it; showSubmit only on the summary step; the confirmation shows on the formBinding success statusKey"
+    ],
+    "composesWith": [
+      "form.input",
+      "form.textarea",
+      "form.select",
+      "control.button",
+      "platform/entities",
+      "platform/persistence"
+    ],
+    "antiPatterns": [
+      "Wizard with explicit step navigation — wrap form inside panel.stepper",
+      "Single-input search — input + button is fine without a form wrapper",
+      "Wrapping only the first step of a multi-step flow in the form — fields of the later steps are never sent, the record is never written"
+    ],
+    "implementation": "Operational constraints (install, permissions, polling, read-only scope):\n- Read-only data display — use data.list\n\nFurther use cases:\n- Filter bar that produces a typed query\n\nValidation: the form validates itself on submit. A missing visible field gets the browser's own message on that field; a required field in a hidden wizard step (visibleWhen) is named in an alert above the submit button, so the visitor can go back to it. Mark only the fields the brief requires as required."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "action",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "method",
+        "type": "\"GET\" | \"POST\" | \"PUT\" | \"PATCH\" | \"DELETE\"",
+        "required": false,
+        "default": "POST",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ],
+          "default": "POST"
+        },
+        "bindable": false
+      },
+      {
+        "name": "submitLabel",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "resetLabel",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "showReset",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "gap",
+        "type": "number | string",
+        "required": false,
+        "default": 16,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": 16
+        },
+        "bindable": false
+      },
+      {
+        "name": "submittingWhen",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Bind to the formBindings statusKeys.loading state key (e.g. {{state.scLoading}}) — while true the submit button is locked with a spinner. The synchronous ref lock stays active regardless."
+        },
+        "bindable": true
+      },
+      {
+        "name": "showSubmit",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Whether the form renders its own submit button. Bind it for a multi-step flow: wrap EVERY step in this one form and show the submit only on the last step, e.g. {{state.step == 3}}. Unset = shown."
+        },
+        "bindable": true
+      },
+      {
+        "name": "resetWhen",
+        "type": "boolean",
+        "required": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "description": "Clears every field when this turns true. Bind it to the formBindings statusKeys.success state key (e.g. {{state.scSuccess}}) so the form empties after a successful save. Only the false → true change resets."
+        },
+        "bindable": true
+      },
+      {
+        "name": "onSubmitAction",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Custom behavior/action name emitted on submit (in addition to the form:submit event)."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "action": "",
+      "method": "POST",
+      "showReset": false,
+      "gap": 16
+    },
+    "canHaveChildren": true,
+    "icon": "☐",
+    "traits": [
+      "modal-content"
+    ],
+    "allowedChildTraits": [
+      "form-field",
+      "form-content"
+    ]
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

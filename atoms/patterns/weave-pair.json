@@ -1,0 +1,40 @@
+{
+  "name": "weave-pair",
+  "role": "weave",
+  "layoutOnly": true,
+  "bodies": [
+    "flow",
+    "dense"
+  ],
+  "description": "Two panes: side-by-side comparison, or editor + preview.",
+  "provenPattern": "From the compatibility matrix: the shells this arrangement is legal on were determined from real page layouts.",
+  "knowledge": {
+    "purpose": "The spine where two things must be seen at once",
+    "useCases": [
+      "Code and explanation",
+      "Version comparison"
+    ],
+    "composesWith": [
+      "shell-topbar-split-doc"
+    ],
+    "antiPatterns": [
+      "Leaving one pane much narrower than the other",
+      "Not saying which pane comes first on a narrow screen"
+    ]
+  },
+  "mobileCollapse": "Vertical stack — and which pane comes first is declared.",
+  "placeholders": {
+    "{{BANDS}}": "the bands of the spine, in order"
+  },
+  "usesBlocks": [
+    "container"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column"
+    },
+    "children": []
+  }
+}

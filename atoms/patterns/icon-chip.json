@@ -1,0 +1,66 @@
+{
+  "name": "icon-chip",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "Icon + label chip (quick-link tile). Composition counterpart of the former control/icon-chip block.",
+  "provenPattern": "Converted from a block to a composition under the rule 'arrangement-only → template'; the look was ported from the former block component.",
+  "knowledge": {
+    "purpose": "Quick-link tile of icon and label",
+    "useCases": [
+      "Quick-access grid on a portal home page",
+      "Category shortcuts",
+      "Tool list"
+    ],
+    "composesWith": [
+      "layout.container"
+    ],
+    "antiPatterns": [
+      "Leaving an icon without its label — an icon alone is not understood",
+      "Picking an icon outside the icon canon",
+      "More than eight chips — the grid becomes a scanning load"
+    ]
+  },
+  "placeholders": {
+    "{{ICON}}": "a valid name from the ICON_PATHS dictionary",
+    "{{LABEL}}": "label"
+  },
+  "usesBlocks": [
+    "container",
+    "icon",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "gap": 8,
+      "align": "center",
+      "padding": 14,
+      "borderRadius": 10,
+      "backgroundColor": "color-mix(in srgb, var(--pw-color-text) 5%, transparent)"
+    },
+    "children": [
+      {
+        "id": "{{ID}}-icon",
+        "type": "icon",
+        "props": {
+          "name": "{{ICON}}",
+          "size": 24,
+          "color": "var(--pw-color-primary)"
+        }
+      },
+      {
+        "id": "{{ID}}-label",
+        "type": "text",
+        "props": {
+          "content": "{{LABEL}}",
+          "textAlign": "center"
+        },
+        "style": {
+          "fontSize": "13px"
+        }
+      }
+    ]
+  }
+}

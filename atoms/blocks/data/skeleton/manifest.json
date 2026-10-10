@@ -1,0 +1,129 @@
+{
+  "id": "data.skeleton",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "data",
+  "name": "skeleton",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Placeholder shimmer block displayed while real content is loading",
+    "useCases": [
+      "Loading state for a list row or a row of cards",
+      "Image placeholder before media.image resolves",
+      "Card skeleton while async data is fetched"
+    ],
+    "composesWith": [
+      "data.list",
+      "container.card",
+      "media.image"
+    ],
+    "antiPatterns": [
+      "Determinate progress — a skeleton says only that content is coming, never how much of it",
+      "Empty-state messaging — use the callout pattern or text.alert",
+      "Permanent placeholder content — render the real block disabled instead"
+    ],
+    "implementation": "Further use cases:\n- List loading state before items arrive"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"text\" | \"circle\" | \"rectangle\" | \"card\"",
+        "required": false,
+        "default": "text",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "text",
+            "circle",
+            "rectangle",
+            "card"
+          ],
+          "default": "text"
+        },
+        "bindable": false
+      },
+      {
+        "name": "lines",
+        "type": "number",
+        "required": false,
+        "default": 3,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10,
+          "default": 3
+        },
+        "bindable": false
+      },
+      {
+        "name": "animated",
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": true
+        },
+        "bindable": false
+      },
+      {
+        "name": "width",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "required": false,
+        "default": 1,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10,
+          "default": 1
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "variant": "text",
+      "lines": 3,
+      "animated": true,
+      "count": 1
+    },
+    "canHaveChildren": false,
+    "icon": "⬚",
+    "traits": []
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

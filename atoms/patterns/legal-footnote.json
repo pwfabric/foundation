@@ -1,0 +1,57 @@
+{
+  "name": "legal-footnote",
+  "role": "band",
+  "body": "flow",
+  "layoutOnly": true,
+  "description": "Legal footnote: terms and privacy links.",
+  "provenPattern": "Derived from 28 real requests that had been met with hand-built workarounds — the band counterpart of those arrangements.",
+  "knowledge": {
+    "purpose": "Presenting the legal footing of the flow visibly but without interrupting",
+    "useCases": [
+      "Sign-up flow",
+      "Checkout flow",
+      "Veri toplayan form"
+    ],
+    "composesWith": [
+      "shell-none-flow"
+    ],
+    "antiPatterns": [
+      "Taking consent with a pre-checked box",
+      "Not opening links in a new tab and so dropping the user out of the flow",
+      "Putting the footnote above the form — it interrupts"
+    ]
+  },
+  "mobileCollapse": "Full width; the type size is unchanged.",
+  "placeholders": {
+    "{{ID}}": "block id prefix",
+    "{{LEGAL}}": "text.content"
+  },
+  "usesBlocks": [
+    "section",
+    "container",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "section",
+    "props": {},
+    "children": [
+      {
+        "id": "{{ID}}-c",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-t",
+            "type": "text",
+            "props": {
+              "content": "{{LEGAL}}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

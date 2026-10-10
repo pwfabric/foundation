@@ -1,0 +1,151 @@
+{
+  "name": "shell-bottombar-grid",
+  "role": "shell",
+  "description": "Bottom navigation bar + tile grid. A surface scanned like an app launcher. A brand row (the logo, or the name as text when there is none) sits on top.",
+  "provenPattern": "Shell matrix — chrome × body: 5 chromes × 4 bodies = 20, four eliminated (with no chrome a grid has no way out, a dense surface has no interaction, a split refutes itself) → 16 cells.",
+  "knowledge": {
+    "purpose": "The frame of a start screen scanned on a narrow screen: tiles are shortcuts, the bottom bar switches sections",
+    "useCases": [
+      "App home screen (shortcut tiles)",
+      "Service catalogue",
+      "An announcement board on a narrow screen"
+    ],
+    "composesWith": [
+      "card-grid"
+    ],
+    "antiPatterns": [
+      "Making the tiles the same as the bottom-bar destinations — the same destination in two places",
+      "Leaving the grid at three columns — a narrow screen is one or two columns",
+      "Giving a tile the full screen height — a board must be scanned at a glance"
+    ]
+  },
+  "mobileCollapse": "Already the narrow-screen form — on desktop the bar stays put, the destinations spread. The grid collapses to one column and tile priority is declared SEPARATELY — grid order does not give it.",
+  "placeholders": {
+    "{{BRAND}}": "brand name as TEXT (the site/app name) — drawn when there is no logo (a logo already carries the name) and always the logo's alt; needs no logo",
+    "{{LOGO}}": "OPTIONAL brand image URL, drawn 28px tall (width follows the picture) IN PLACE of the name; leave it empty (\"\") when there is no logo and the name is drawn as text",
+    "{{BAR_ITEMS}}": "bottom-bar destinations: [{label, href, icon}] — one item per REAL destination of the app, at most five; never invent, pad or repeat one to fill the bar",
+    "{{ACTIVE}}": "href of the active destination",
+    "{{MAIN}}": "main slot — TILES only (cards, stats, charts): every child is one grid cell, so a page band does not go here",
+    "{{LEGAL}}": "copyright / legal line — PLAIN TEXT, one line (e.g. \"© 2026 Acme Ltd.\"). The ONLY place the copyright appears: the `footer` band carries link columns and never a copyright. Leave it empty (\"\") for none"
+  },
+  "usesBlocks": [
+    "bottom-bar",
+    "container",
+    "grid",
+    "image",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "padding": 0
+    },
+    "layout": {
+      "widthScope": {
+        "xs": "viewport"
+      }
+    },
+    "children": [
+      {
+        "id": "{{ID}}-brand",
+        "type": "container",
+        "props": {
+          "direction": "row",
+          "keepRow": true,
+          "align": "center",
+          "gap": 10,
+          "padding": 12
+        },
+        "style": {
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-brand-logo",
+            "type": "image",
+            "props": {
+              "src": "{{LOGO}}",
+              "alt": "{{BRAND}}",
+              "height": 28,
+              "width": "auto",
+              "objectFit": "contain",
+              "hideWhenEmpty": true
+            },
+            "style": {
+              "flex": "0 0 auto"
+            }
+          },
+          {
+            "id": "{{ID}}-brand-name",
+            "type": "text",
+            "props": {
+              "content": "{{BRAND}}",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "hideWhenSet": "{{LOGO}}"
+            },
+            "style": {
+              "flex": "0 1 auto"
+            }
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-content",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "style": {
+          "width": "100%",
+          "maxWidth": "var(--pw-layout-container-max-width, 1280px)",
+          "marginInline": "auto",
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))",
+          "boxSizing": "border-box"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-main",
+            "type": "grid",
+            "props": {
+              "columns": 3,
+              "minChildWidth": 240
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-legal",
+        "type": "text",
+        "props": {
+          "content": "{{LEGAL}}",
+          "textAlign": "center",
+          "color": "var(--pw-color-text-muted)"
+        },
+        "style": {
+          "fontSize": "0.8rem",
+          "padding": "16px"
+        }
+      },
+      {
+        "id": "{{ID}}-bar",
+        "type": "bottom-bar",
+        "props": {
+          "items": "{{BAR_ITEMS}}",
+          "activeHref": "{{ACTIVE}}"
+        },
+        "layout": {
+          "widthScope": {
+            "xs": "viewport"
+          }
+        }
+      }
+    ]
+  },
+  "chrome": "bottombar",
+  "body": "grid",
+  "layoutOnly": true
+}

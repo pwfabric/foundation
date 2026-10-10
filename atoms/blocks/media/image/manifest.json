@@ -1,0 +1,205 @@
+{
+  "id": "media.image",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "media",
+  "name": "image",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Image element with responsive sizing, alt text, and adapter-aware loading (Next.js / default)",
+    "useCases": [
+      "Hero image on a marketing surface",
+      "Avatar replacement when the photo is large",
+      "Product image in a card or grid"
+    ],
+    "composesWith": [
+      "layout.grid",
+      "container.card",
+      "layout.section"
+    ],
+    "antiPatterns": [
+      "Decorative icon — use control.icon",
+      "User profile photo at small sizes — use control.avatar",
+      "Animated content — use media.video"
+    ],
+    "implementation": "Empty or placeholder src keeps the layout: the slot renders a themeable box (card ground, dashed border) at the declared width/height/aspectRatio in the editor and in the live app; live it carries no label text. A platform placeholder src (data:image/svg+xml with pw-placeholder:<key>) is never drawn as the grey SVG: the block shows the themeable slot and sets data-pw-placeholder=\"<key>\". hideWhenEmpty draws nothing for either.\nFurther use cases:\n- Inline screenshot in documentation"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "src",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "Image URL, or the platform placeholder (a data:image/svg+xml value carrying pw-placeholder:<key>). An empty or placeholder src keeps the layout: the block draws a themeable slot of the same size, in the editor and in the live app (quiet there, no label), and a placeholder src exposes its key as data-pw-placeholder until the real picture replaces it.",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": true
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "objectFit",
+        "type": "\"cover\" | \"contain\" | \"fill\" | \"none\" | \"scale-down\"",
+        "required": false,
+        "default": "cover",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "cover",
+            "contain",
+            "fill",
+            "none",
+            "scale-down"
+          ],
+          "default": "cover"
+        },
+        "bindable": false
+      },
+      {
+        "name": "width",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "aspectRatio",
+        "type": "string",
+        "required": false,
+        "description": "CSS aspect-ratio for the image slot, e.g. '16/9', '4/3', '1/1', '21/9', '3/2', or a number. Sets the slot ratio without forcing a fixed height; object-fit:cover keeps the photo filling it.",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "borderRadius",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "loading",
+        "type": "\"lazy\" | \"eager\"",
+        "required": false,
+        "default": "lazy",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "lazy",
+            "eager"
+          ],
+          "default": "lazy"
+        },
+        "bindable": false
+      },
+      {
+        "name": "align",
+        "type": "\"left\" | \"center\" | \"right\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "overlayTitle",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Over-image heading on a dark bottom gradient (media-teaser pattern). Without it the block is a plain image."
+        },
+        "bindable": false
+      },
+      {
+        "name": "overlaySubtitle",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Secondary line under the overlay heading."
+        },
+        "bindable": false
+      },
+      {
+        "name": "hideWhenEmpty",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false,
+          "description": "An optional image (a logo beside a text brand): with no src, or only the platform placeholder, it draws nothing, in the editor too. Leave false for a content image: an empty or placeholder src then keeps the layout with a themeable slot."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "src": "",
+      "alt": "",
+      "objectFit": "cover",
+      "loading": "lazy"
+    },
+    "canHaveChildren": false,
+    "icon": "⊟",
+    "traits": [
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

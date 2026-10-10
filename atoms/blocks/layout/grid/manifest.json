@@ -1,0 +1,144 @@
+{
+  "id": "layout.grid",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "layout",
+  "name": "grid",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Responsive multi-column grid that lays out children in evenly distributed columns",
+    "useCases": [
+      "Marketing feature grid (3 or 4 cards across)",
+      "Pricing tier comparison row",
+      "Image gallery thumbnail layout"
+    ],
+    "composesWith": [
+      "layout.section",
+      "layout.container",
+      "container.card",
+      "media.image"
+    ],
+    "antiPatterns": [
+      "Single-column or simple flex layout — use layout.container",
+      "Nested grids as direct children — wrap inner grid in a container first",
+      "Tabular data with rows + columns — a grid lays out tiles; it has no header row and no column alignment"
+    ],
+    "implementation": "Further use cases:\n- Dashboard tile arrangement that reflows on mobile"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "columns",
+        "type": "number",
+        "required": false,
+        "default": 2,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 12,
+          "default": 2
+        },
+        "bindable": false
+      },
+      {
+        "name": "columnsXs",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 6,
+          "description": "Columns on a phone (640px and below). Unset = one column. Set 2 for small tiles (stats, shortcuts) that should sit side by side on a phone."
+        },
+        "bindable": false
+      },
+      {
+        "name": "gap",
+        "type": "number",
+        "required": false,
+        "default": 16,
+        "jsonSchema": {
+          "type": "number",
+          "default": 16
+        },
+        "bindable": false
+      },
+      {
+        "name": "minChildWidth",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "alignItems",
+        "type": "\"start\" | \"center\" | \"end\" | \"stretch\" | \"baseline\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "stretch",
+            "baseline"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "rowGap",
+        "type": "number",
+        "required": false,
+        "description": "Vertical gap override in px; falls back to `gap`.",
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false
+      },
+      {
+        "name": "columnGap",
+        "type": "number",
+        "required": false,
+        "description": "Horizontal gap override in px; falls back to `gap`.",
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false
+      },
+      {
+        "name": "rows",
+        "type": "integer",
+        "required": false,
+        "description": "Explicit row count for 2D compositions — pairs with honest column tracks so child spans are deterministic.",
+        "jsonSchema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 24
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "columns": 2,
+      "gap": 16
+    },
+    "canHaveChildren": true,
+    "icon": "⊞",
+    "traits": [
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:structure"
+  ]
+}

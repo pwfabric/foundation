@@ -1,0 +1,39 @@
+{
+  "name": "pending-need",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "The slot a composer leaves for a need the catalogue cannot meet yet: one content.placeholder tile carrying the need key and kind. Replaced when the need is fulfilled (a new block, a market install).",
+  "provenPattern": "Added for a composer's unmet block needs.",
+  "knowledge": {
+    "purpose": "Holds the place of a block, capability, connector, pattern or icon the app needs but no installed pack carries, until a generator or a marketplace install fills it",
+    "useCases": [
+      "A block need the composer could not meet from installed packs",
+      "A region that waits on a capability or connector the app has not installed"
+    ],
+    "composesWith": [
+      "layout.section",
+      "layout.grid"
+    ],
+    "antiPatterns": [
+      "An empty image slot — media.image keeps its own layout with an empty or placeholder src",
+      "A need an installed block or pattern already meets — place that instead"
+    ]
+  },
+  "placeholders": {
+    "{{LABEL}}": "placeholder.label — what will stand here (editor only)",
+    "{{NEED}}": "placeholder.need — the need key the composer recorded",
+    "{{KIND}}": "placeholder.kind — block | capability | connector | pattern | icon"
+  },
+  "usesBlocks": [
+    "placeholder"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "placeholder",
+    "props": {
+      "label": "{{LABEL}}",
+      "need": "{{NEED}}",
+      "kind": "{{KIND}}"
+    }
+  }
+}

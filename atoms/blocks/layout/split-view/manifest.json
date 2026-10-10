@@ -1,0 +1,210 @@
+{
+  "id": "layout.split-view",
+  "kind": "block",
+  "version": "0.1.0",
+  "category": "layout",
+  "name": "split-view",
+  "state": "experimental",
+  "knowledge": {
+    "purpose": "SPLIT body: a selecting list on the left, an answering detail on the right. The selection belongs to the SURFACE, not to this block — the runtime shell carries it and mirrors it into the URL (?selectionKey=itemId), so the selected record is shareable as a link and the browser's Back undoes the selection. Two detail modes: `document` reads top-down; `stream` opens with the newest item at the BOTTOM and the composer as the detail's last child.",
+    "useCases": [
+      "Inbox — subject list + message body (detailMode: document)",
+      "Team chat — channel list + message stream + composer (detailMode: stream)",
+      "Record management — search results + the selected record's detail"
+    ],
+    "composesWith": [
+      "layout.navbar",
+      "form.textarea",
+      "control.button"
+    ],
+    "antiPatterns": [
+      "Adding a footer to the page in stream mode — nothing can sit below the composer",
+      "Keeping the selection out of the URL — then the selected record cannot be shared and Back does nothing",
+      "Using the list with a single item — with nothing to choose this is not a split, it is one column"
+    ],
+    "implementation": "Field mapping: bind items to a source and name its fields with titleKey / bodyKey / metaKey / excerptKey / idKey / entriesKey (dotted paths allowed) — the list and the detail read the record's own fields. Selection: the first row is selected by default; give emptyLabel (or autoSelect:false) and nothing is selected until the visitor picks.\n\nFurther anti-patterns:\n- Turning the detail pane into a second navigation area — the detail is the answer, not a menu"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "items",
+        "type": "array",
+        "required": false,
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "meta": {
+                "type": "string"
+              },
+              "excerpt": {
+                "type": "string"
+              },
+              "body": {
+                "type": "string"
+              },
+              "entries": {
+                "type": "array"
+              }
+            },
+            "additionalProperties": true
+          },
+          "description": "The rows: {id, title, meta?, excerpt?, body?, entries?}, or any records (a bound source) whose fields the *Key props name."
+        },
+        "bindable": true
+      },
+      {
+        "name": "idKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Field holding the row id (default id, then _id / slug / key). A dotted path reaches a nested field (\"data.title\")."
+        },
+        "bindable": false
+      },
+      {
+        "name": "titleKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Field shown as the row title and the detail heading (default title, then name / label). A dotted path reaches a nested field (\"data.title\")."
+        },
+        "bindable": false
+      },
+      {
+        "name": "metaKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Field shown under the title (default meta, then subtitle). A dotted path reaches a nested field (\"data.title\")."
+        },
+        "bindable": false
+      },
+      {
+        "name": "excerptKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Field shown as the one-line excerpt in the list (default excerpt, then summary / description). A dotted path reaches a nested field (\"data.title\")."
+        },
+        "bindable": false
+      },
+      {
+        "name": "bodyKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Field read as the detail body in document mode (default body, then content / text). A dotted path reaches a nested field (\"data.title\")."
+        },
+        "bindable": false
+      },
+      {
+        "name": "entriesKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Field holding the stream entries [{from, text, at}] in stream mode (default entries, then messages). A dotted path reaches a nested field (\"data.title\")."
+        },
+        "bindable": false
+      },
+      {
+        "name": "autoSelect",
+        "type": "boolean",
+        "required": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "description": "Select the first row while nothing is selected. Unset: on, unless emptyLabel is given — then nothing is selected until the visitor picks, and emptyLabel shows in the detail pane."
+        },
+        "bindable": false
+      },
+      {
+        "name": "detailMode",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "document",
+            "stream"
+          ],
+          "description": "document: read from the top like a document. stream: starts at the bottom like a chat, scrolled to the end on open."
+        },
+        "bindable": false
+      },
+      {
+        "name": "listTitle",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Heading of the list column; also the listbox's accessible name."
+        },
+        "bindable": false
+      },
+      {
+        "name": "listWidth",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "description": "List column width (px)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "selectionKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Name of the URL query parameter carrying the selection. Other blocks reading the same key see the same selection."
+        },
+        "bindable": false
+      },
+      {
+        "name": "emptyLabel",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Shown in the detail pane while nothing is selected (in the page language, e.g. \"Pick a section on the left\"). Giving it turns autoSelect off unless autoSelect is set."
+        },
+        "bindable": false
+      },
+      {
+        "name": "height",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Height of the split area (CSS length). The bottom lock of stream mode needs a bounded height."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "items": [],
+      "detailMode": "document",
+      "listWidth": 320,
+      "selectionKey": "sec",
+      "height": "72vh"
+    },
+    "canHaveChildren": true
+  },
+  "tags": [
+    "tier:structure"
+  ]
+}

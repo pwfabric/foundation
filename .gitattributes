@@ -1,0 +1,9 @@
+# Check out LF on every platform. A pack's content hash is taken over its
+# bytes: with CRLF on Windows the same pack would hash differently there.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary
+*.mp4 binary
+*.pwpack binary
+*.tgz binary

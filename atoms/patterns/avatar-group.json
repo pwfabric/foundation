@@ -1,0 +1,87 @@
+{
+  "name": "avatar-group",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "Overlapping avatar row + a \"+N\" overflow badge. Composition counterpart of the former control/avatar-group block — the overlap by negative margin, the overflow badge written statically.",
+  "provenPattern": "Converted to a composition under the rule 'arrangement-only → template'.",
+  "knowledge": {
+    "purpose": "Represents a group on one line with a row of overlapping small avatars and a \"+N\" overflow badge",
+    "useCases": [
+      "Showing a task's or document's participants at the end of the row",
+      "Summarising members on a team card without listing names",
+      "Showing participants densely on the comment/like row"
+    ],
+    "composesWith": [
+      "avatar-row-item",
+      "container.card",
+      "layout.container"
+    ],
+    "antiPatterns": [
+      "Showing more than five avatars — the arrangement was built for the overflow badge; a crowd is unreadable",
+      "Making avatars the only carrier of identity — the name must also exist as accessible text",
+      "Avatars that look clickable but go nowhere"
+    ]
+  },
+  "placeholders": {
+    "{{OVERFLOW}}": "remaining people count (+N)",
+    "{{NAME_1}}": "avatar.name",
+    "{{NAME_2}}": "avatar.name",
+    "{{NAME_3}}": "avatar.name"
+  },
+  "usesBlocks": [
+    "container",
+    "avatar",
+    "badge"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "row",
+      "align": "center"
+    },
+    "children": [
+      {
+        "id": "{{ID}}-a1",
+        "type": "avatar",
+        "props": {
+          "name": "{{NAME_1}}",
+          "size": "sm"
+        }
+      },
+      {
+        "id": "{{ID}}-a2",
+        "type": "avatar",
+        "props": {
+          "name": "{{NAME_2}}",
+          "size": "sm"
+        },
+        "style": {
+          "marginLeft": "-8px"
+        }
+      },
+      {
+        "id": "{{ID}}-a3",
+        "type": "avatar",
+        "props": {
+          "name": "{{NAME_3}}",
+          "size": "sm"
+        },
+        "style": {
+          "marginLeft": "-8px"
+        }
+      },
+      {
+        "id": "{{ID}}-more",
+        "type": "badge",
+        "props": {
+          "text": "+{{OVERFLOW}}",
+          "rounded": true
+        },
+        "style": {
+          "marginLeft": "-4px"
+        }
+      }
+    ]
+  }
+}

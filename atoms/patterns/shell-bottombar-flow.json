@@ -1,0 +1,149 @@
+{
+  "name": "shell-bottombar-flow",
+  "role": "shell",
+  "description": "Bottom navigation bar (one item per real destination, at most five) + a vertical stack of bands. No top bar. A brand row (the logo, or the name as text when there is none) sits on top.",
+  "provenPattern": "Shell matrix — chrome × body: 5 chromes × 4 bodies = 20, four eliminated (with no chrome a grid has no way out, a dense surface has no interaction, a split refutes itself) → 16 cells.",
+  "knowledge": {
+    "purpose": "The frame of a one-handed app: navigation under the thumb, content read upwards",
+    "useCases": [
+      "Field/mobile-first app",
+      "Event or campus app",
+      "Employee self-service app"
+    ],
+    "composesWith": [
+      "weave-notice"
+    ],
+    "antiPatterns": [
+      "Adding a sixth destination, or padding the bar with invented ones — a bottom bar holds the real destinations, at most five; more is a menu",
+      "Adding a top bar too — two navigations on one screen make it unclear which is right",
+      "Dropping the label and leaving the icon alone — an icon's meaning is a learned assumption"
+    ]
+  },
+  "mobileCollapse": "Already the narrow-screen form — on desktop the bar stays put, the destinations spread. Bands are already single-column; order is kept.",
+  "placeholders": {
+    "{{BRAND}}": "brand name as TEXT (the site/app name) — drawn when there is no logo (a logo already carries the name) and always the logo's alt; needs no logo",
+    "{{LOGO}}": "OPTIONAL brand image URL, drawn 28px tall (width follows the picture) IN PLACE of the name; leave it empty (\"\") when there is no logo and the name is drawn as text",
+    "{{BAR_ITEMS}}": "bottom-bar destinations: [{label, href, icon}] — one item per REAL destination of the app, at most five; never invent, pad or repeat one to fill the bar",
+    "{{ACTIVE}}": "href of the active destination",
+    "{{MAIN}}": "main slot — the bands and weaves of the page sit here, in reading order",
+    "{{LEGAL}}": "copyright / legal line — PLAIN TEXT, one line (e.g. \"© 2026 Acme Ltd.\"). The ONLY place the copyright appears: the `footer` band carries link columns and never a copyright. Leave it empty (\"\") for none"
+  },
+  "usesBlocks": [
+    "bottom-bar",
+    "container",
+    "image",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "padding": 0
+    },
+    "layout": {
+      "widthScope": {
+        "xs": "viewport"
+      }
+    },
+    "children": [
+      {
+        "id": "{{ID}}-brand",
+        "type": "container",
+        "props": {
+          "direction": "row",
+          "keepRow": true,
+          "align": "center",
+          "gap": 10,
+          "padding": 12
+        },
+        "style": {
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-brand-logo",
+            "type": "image",
+            "props": {
+              "src": "{{LOGO}}",
+              "alt": "{{BRAND}}",
+              "height": 28,
+              "width": "auto",
+              "objectFit": "contain",
+              "hideWhenEmpty": true
+            },
+            "style": {
+              "flex": "0 0 auto"
+            }
+          },
+          {
+            "id": "{{ID}}-brand-name",
+            "type": "text",
+            "props": {
+              "content": "{{BRAND}}",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "hideWhenSet": "{{LOGO}}"
+            },
+            "style": {
+              "flex": "0 1 auto"
+            }
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-content",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "style": {
+          "width": "100%",
+          "maxWidth": "var(--pw-layout-container-max-width, 1280px)",
+          "marginInline": "auto",
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))",
+          "boxSizing": "border-box"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-main",
+            "type": "container",
+            "props": {
+              "direction": "column"
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-legal",
+        "type": "text",
+        "props": {
+          "content": "{{LEGAL}}",
+          "textAlign": "center",
+          "color": "var(--pw-color-text-muted)"
+        },
+        "style": {
+          "fontSize": "0.8rem",
+          "padding": "16px"
+        }
+      },
+      {
+        "id": "{{ID}}-bar",
+        "type": "bottom-bar",
+        "props": {
+          "items": "{{BAR_ITEMS}}",
+          "activeHref": "{{ACTIVE}}"
+        },
+        "layout": {
+          "widthScope": {
+            "xs": "viewport"
+          }
+        }
+      }
+    ]
+  },
+  "chrome": "bottombar",
+  "body": "flow",
+  "layoutOnly": true
+}

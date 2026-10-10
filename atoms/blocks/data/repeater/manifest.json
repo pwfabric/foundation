@@ -1,0 +1,293 @@
+{
+  "id": "data.repeater",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "data",
+  "name": "repeater",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Renders a data-bound array as N uniform items when the count is only known at runtime: built-in 'card' (icon/avatar grid) or 'row' (a vertical list: avatar, title+subtitle, trailing badge/CTA) layouts fed by items, or children as an item TEMPLATE ({{item.Field}}) that needs a block-level \"repeat\": \"{{source}}\".",
+    "useCases": [
+      "An external list rendered as announcement/news rows (layout 'row' with headingField/subtitleField)",
+      "App launcher tile grid from a data source (layout 'card' + compact + minCellWidth)",
+      "Directory/people list with avatarField and trailing badge counts"
+    ],
+    "composesWith": [
+      "layout.section",
+      "container.card",
+      "platform/entities"
+    ],
+    "antiPatterns": [
+      "Fixed, small, known-count content — compose blocks statically or copy a template snippet instead",
+      "Tabular data with comparable columns — a repeater repeats one card-shaped template; it has no column headers",
+      "Single featured item — bind {{source[0].Field}} expressions directly into content blocks",
+      "Children with {{item.*}} and no block-level \"repeat\" — putting the source in props.items does NOT expand a template; the children render once outside any item (one ghost row). The block draws nothing in that case and the pack gate rejects it. Write \"repeat\": \"{{source}}\" on the repeater itself."
+    ],
+    "implementation": "Further use cases:\n- Arbitrary per-item composition via children item-template ({{item.Title}}) when the two layouts don't fit\n\nTEMPLATE MODE REQUIRES repeat: {\"type\":\"repeater\",\"repeat\":\"{{products}}\",\"children\":[{\"type\":\"text\",\"props\":{\"content\":\"{{item.name}}\"}}]}. `items` feeds only the built-in card/row layouts. A single record bound to items is shown as a list of one.\n\nWhile loadingWhen is true a shimmer skeleton shows; errorWhen with a message shows a quiet error shape. In template mode the field-mapping props are ignored; `repeat` is a sibling of props, not a prop."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "items",
+        "type": "Record<string, unknown>[]",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "default": []
+        },
+        "bindable": true
+      },
+      {
+        "name": "layout",
+        "type": "string",
+        "required": false,
+        "default": "card",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "card",
+            "row",
+            "inline"
+          ],
+          "default": "card",
+          "description": "'card' = responsive tile grid; 'row' = a vertical list, one item per line (stacked top to bottom), each row with a leading avatar/icon, title+subtitle and a trailing badge/CTA; 'inline' = the items wrap as chips on as many lines as they need (tags, categories) — each chip shows headingField and links to ctaHrefField; with template children (repeat) the clones wrap the same way, so a repeated badge becomes a chip row. gap sets the space between chips."
+        },
+        "bindable": false
+      },
+      {
+        "name": "headingField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field rendered as the title. HTML in field values is stripped to plain text."
+        },
+        "bindable": false
+      },
+      {
+        "name": "textField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field rendered as the body/description text (card layout)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "subtitleField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field rendered as the secondary line (row layout)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "avatarField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field whose value is an image URL rendered as the leading avatar/icon image (falls back to iconField/iconDefault)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "iconField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field whose value picks the leading icon (see iconMap)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "iconMap",
+        "type": "Record<string, string>",
+        "required": false,
+        "jsonSchema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Maps iconField values to icon names from the shared icon set."
+        },
+        "bindable": false
+      },
+      {
+        "name": "iconDefault",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Fallback icon name when no avatar/icon field resolves."
+        },
+        "bindable": false
+      },
+      {
+        "name": "badgeField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field rendered as a trailing badge/count pill (row layout)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "ctaLabelField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field whose value is the trailing CTA label (row layout)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "ctaLabel",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Fixed trailing CTA label applied to every item (alternative to ctaLabelField)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "ctaHrefField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Item field whose value is the CTA link href."
+        },
+        "bindable": false
+      },
+      {
+        "name": "ctaVariant",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary",
+            "outline",
+            "ghost"
+          ],
+          "description": "Visual variant of the trailing CTA button/link."
+        },
+        "bindable": false
+      },
+      {
+        "name": "columns",
+        "type": "number",
+        "required": false,
+        "default": 1,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 4,
+          "default": 1,
+          "description": "Card layout only. 1 (default) = one item per line. Any value above 1 turns the card grid into auto-fit: as many cells per line as fit at minCellWidth — the width decides the count, not this number. Lower minCellWidth for more cells per line."
+        },
+        "bindable": false
+      },
+      {
+        "name": "minCellWidth",
+        "type": "number",
+        "required": false,
+        "default": 280,
+        "jsonSchema": {
+          "type": "number",
+          "default": 280,
+          "description": "Auto-fit minimum tile width in px for the card grid (small values give app-launcher style tight grids)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "compact",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false,
+          "description": "Card layout: centered icon + small label tile look (app launcher)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "gap",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "description": "Gap between items in px."
+        },
+        "bindable": false
+      },
+      {
+        "name": "maxItems",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "description": "Renders at most N items (field-mapping layouts only; the children item-template renders the full array)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "emptyText",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Quiet text shown when the bound array resolves empty."
+        },
+        "bindable": false
+      },
+      {
+        "name": "loadingWhen",
+        "type": "boolean",
+        "required": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "description": "Bind to {{__loading.<sourceId>}} — true renders a shimmer skeleton instead of items."
+        },
+        "bindable": true
+      },
+      {
+        "name": "errorWhen",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Bind to {{__errors.<sourceId>}} — a non-empty message renders a quiet error shape (message in tooltip)."
+        },
+        "bindable": true
+      }
+    ],
+    "defaultProps": {
+      "items": [],
+      "layout": "card",
+      "minCellWidth": 280,
+      "compact": false
+    },
+    "canHaveChildren": true,
+    "icon": "▦",
+    "traits": []
+  },
+  "tags": [
+    "tier:data"
+  ]
+}

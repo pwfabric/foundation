@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "showcase.content",
+  "version": "1.0.0",
+  "kind": "surface",
+  "appearance": {
+    "use": "theme-zinc"
+  },
+  "title": "Long-form content",
+  "description": "A reading page built only from foundation: prose, a list, a repeater rendering records, and a video with its caption.",
+  "category": "content",
+  "tags": [
+    "showcase",
+    "content"
+  ],
+  "intent": {
+    "purpose": "One reading page that places every content block foundation ships, so text, records and media are seen together in one measure.",
+    "audience": "Whoever composes a surface with foundation. This page is a TECHNIQUE EXEMPLAR, not a customer page: it places every block of its family so nothing foundation ships goes unrendered.",
+    "tone": "Demonstrative and exact — the arrangement is the argument, not the copy.",
+    "successCriteria": "The composer can rebuild this page from foundation alone and keep its 3 stated laws intact."
+  },
+  "capabilities": [],
+  "layout": {},
+  "dataSources": [],
+  "initialState": {},
+  "knowledge": {
+    "purpose": "One reading page that places every content block foundation ships, so text, records and media are seen together in one measure.",
+    "laws": [
+      "Running text is prose in one readable measure; the page never widens past it",
+      "A list states parallel points; records with fields are a repeater, never hand-built cards",
+      "Media carries a caption that says what it shows"
+    ],
+    "patternsExercised": [
+      "page-header",
+      "card-grid",
+      "feature-card"
+    ]
+  },
+  "blocks": [
+    {
+      "id": "ct-header",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 8,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "ct-title",
+          "type": "heading",
+          "props": {
+            "text": "Long-form content",
+            "level": "h1"
+          }
+        },
+        {
+          "id": "ct-sub",
+          "type": "text",
+          "props": {
+            "content": "Prose, lists, records and media in one reading measure.",
+            "color": "var(--pw-color-text-muted)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ct-prose-band",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "ct-prose-band-h",
+          "type": "heading",
+          "props": {
+            "text": "Prose",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "ct-prose",
+          "type": "prose",
+          "props": {
+            "maxWidth": 680,
+            "content": "## Why foundation is small\n\nFoundation ships the blocks every app needs and nothing a single kind of app needs. A pricing table, a product gallery or a map belongs to the pack whose subject it is.\n\nThat keeps the ground floor **light**, **testable on its own**, and the same in every runtime that implements the spec."
+          }
+        },
+        {
+          "id": "ct-list",
+          "type": "list",
+          "props": {
+            "style": "check",
+            "items": [
+              "Every block is placed on a page in this pack",
+              "Two reference themes, one light and one dark",
+              "No call to an outside service"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ct-records",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "ct-records-h",
+          "type": "heading",
+          "props": {
+            "text": "Records",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "ct-repeater",
+          "type": "repeater",
+          "props": {
+            "layout": "card",
+            "columns": 3,
+            "headingField": "name",
+            "textField": "summary",
+            "badgeField": "kind",
+            "items": [
+              {
+                "name": "Blocks",
+                "summary": "Layout, text, controls, forms, data, feedback and media.",
+                "kind": "33"
+              },
+              {
+                "name": "Patterns",
+                "summary": "Shells, page parts and small compositions.",
+                "kind": "25"
+              },
+              {
+                "name": "Capabilities",
+                "summary": "Entities, interaction, navigation and persistence.",
+                "kind": "4"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ct-media",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "ct-media-h",
+          "type": "heading",
+          "props": {
+            "text": "Media",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "ct-video",
+          "type": "video",
+          "props": {
+            "src": "media/foundation-tour.mp4",
+            "controls": true,
+            "aspectRatio": "16/9",
+            "caption": "The seven block families foundation ships, in seven seconds."
+          }
+        }
+      ]
+    }
+  ]
+}

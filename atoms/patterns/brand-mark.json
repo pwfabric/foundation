@@ -1,0 +1,80 @@
+{
+  "name": "brand-mark",
+  "role": "band",
+  "body": "flow",
+  "layoutOnly": true,
+  "description": "Brand mark: the flow's only identity element — the logo, or the brand name as text when there is none.",
+  "provenPattern": "Derived from 28 real requests that had been met with hand-built workarounds — the band counterpart of those arrangements.",
+  "knowledge": {
+    "purpose": "Telling the user where they are in a navigation-less flow",
+    "useCases": [
+      "Sign-in screen",
+      "Checkout flow",
+      "Invitation page"
+    ],
+    "composesWith": [
+      "shell-none-flow"
+    ],
+    "antiPatterns": [
+      "Linking the brand to the home page — it offers a way out of the flow",
+      "Putting a long heading in place of the brand",
+      "Moving the mark to the middle of the page — it sits at the start of the flow"
+    ]
+  },
+  "mobileCollapse": "Unchanged; stays centred.",
+  "placeholders": {
+    "{{ID}}": "block id prefix",
+    "{{LOGO}}": "OPTIONAL brand image URL, drawn 28px tall (width follows the picture) IN PLACE of the name; leave it empty (\"\") when there is no logo and the name is drawn as text",
+    "{{BRAND}}": "brand name as TEXT (the site/app name) — drawn when there is no logo (a logo already carries the name) and always the logo's alt; needs no logo"
+  },
+  "usesBlocks": [
+    "container",
+    "image",
+    "section",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "section",
+    "props": {},
+    "children": [
+      {
+        "id": "{{ID}}-c",
+        "type": "container",
+        "props": {
+          "direction": "column",
+          "align": "center",
+          "gap": 8
+        },
+        "children": [
+          {
+            "id": "{{ID}}-i",
+            "type": "image",
+            "props": {
+              "src": "{{LOGO}}",
+              "alt": "{{BRAND}}",
+              "height": 28,
+              "width": "auto",
+              "objectFit": "contain",
+              "hideWhenEmpty": true
+            },
+            "style": {
+              "flex": "0 0 auto"
+            }
+          },
+          {
+            "id": "{{ID}}-n",
+            "type": "text",
+            "props": {
+              "content": "{{BRAND}}",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+              "hideWhenSet": "{{LOGO}}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

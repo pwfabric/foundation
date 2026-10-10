@@ -1,0 +1,114 @@
+{
+  "id": "container.accordion",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "container",
+  "name": "accordion",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Vertical stack of collapsible items where each header toggles its body",
+    "useCases": [
+      "FAQ list",
+      "Settings sections that hide rare options",
+      "Mobile navigation collapse"
+    ],
+    "composesWith": [
+      "layout.section",
+      "layout.container",
+      "container.card"
+    ],
+    "antiPatterns": [
+      "Top-level page navigation — use layout.navbar",
+      "Single collapsible block — show the content plainly instead",
+      "Carousel of slides — use a carousel block from a pack built on foundation"
+    ],
+    "implementation": "Further use cases:\n- Long product spec breakdown"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "items",
+        "type": "[{id, title, content, disabled}]",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              },
+              "disabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "content"
+            ]
+          },
+          "default": []
+        },
+        "bindable": false
+      },
+      {
+        "name": "allowMultiple",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "defaultOpen",
+        "type": "string[]",
+        "required": false,
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bindable": false
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"bordered\" | \"separated\"",
+        "required": false,
+        "default": "default",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "default",
+            "bordered",
+            "separated"
+          ],
+          "default": "default"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "items": [],
+      "allowMultiple": false,
+      "variant": "default"
+    },
+    "canHaveChildren": false,
+    "icon": "▾",
+    "traits": []
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

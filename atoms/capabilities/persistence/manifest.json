@@ -1,0 +1,90 @@
+{
+  "id": "platform/persistence",
+  "kind": "capability",
+  "version": "1.0.0",
+  "name": "Data & State Persistence",
+  "description": "Data fetching, mutation, persistence operations, and client-side state management",
+  "tags": [
+    "data",
+    "state",
+    "persistence",
+    "api"
+  ],
+  "state": "stable",
+  "knowledge": {
+    "purpose": "App-scoped data fetch, mutation, and cache layer that backs surface bindings and state stores",
+    "useCases": [
+      "List or table backed by an entity collection",
+      "Form submit that creates or updates an entity",
+      "Optimistic UI update with rollback on failure",
+      "Cached read across multiple components on the same surface"
+    ],
+    "composesWith": [
+      "platform/entities",
+      "form.form",
+      "data.list",
+      "data.repeater"
+    ],
+    "antiPatterns": [
+      "Client-only ephemeral UI state — use client form state instead",
+      "Queries across apps — persistence is always scoped to one app",
+      "Unbounded background polling — prefer event-driven invalidation"
+    ]
+  },
+  "config": {
+    "fields": [
+      {
+        "key": "defaultCacheTtl",
+        "type": "number",
+        "required": false,
+        "defaultValue": 300,
+        "label": "Default Cache TTL",
+        "description": "Default cache time-to-live in seconds",
+        "constraints": {
+          "min": 0,
+          "max": 86400
+        }
+      },
+      {
+        "key": "maxRetries",
+        "type": "number",
+        "required": false,
+        "defaultValue": 3,
+        "label": "Max Retries",
+        "description": "Maximum number of retry attempts for failed requests",
+        "constraints": {
+          "min": 0,
+          "max": 10
+        }
+      },
+      {
+        "key": "timeout",
+        "type": "number",
+        "required": false,
+        "defaultValue": 5000,
+        "label": "Request Timeout",
+        "description": "Request timeout in milliseconds",
+        "constraints": {
+          "min": 1000,
+          "max": 30000
+        }
+      },
+      {
+        "key": "persistenceEnabled",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": true,
+        "label": "Enable Persistence",
+        "description": "Persist state to local storage"
+      },
+      {
+        "key": "storageKey",
+        "type": "string",
+        "required": false,
+        "defaultValue": "pwfabric-state",
+        "label": "Storage Key",
+        "description": "Local storage key prefix for persisted state"
+      }
+    ]
+  }
+}

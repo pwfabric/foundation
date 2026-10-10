@@ -1,0 +1,110 @@
+{
+  "id": "control.divider",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "control",
+  "name": "divider",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Thin horizontal or vertical rule that visually separates groups of content",
+    "useCases": [
+      "Section break between two card regions",
+      "Separator inside a dropdown menu",
+      "Vertical divider between toolbar groups"
+    ],
+    "composesWith": [
+      "layout.container",
+      "layout.section",
+      "container.card"
+    ],
+    "antiPatterns": [
+      "Full-bleed page band — use layout.section with a background colour",
+      "Decorative ornament — use media.image",
+      "Spacing-only separation — adjust gap on the parent container instead"
+    ],
+    "implementation": "Further use cases:\n- Thematic break between paragraphs"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "orientation",
+        "type": "\"horizontal\" | \"vertical\"",
+        "required": false,
+        "default": "horizontal",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal"
+        },
+        "bindable": false
+      },
+      {
+        "name": "thickness",
+        "type": "number",
+        "required": false,
+        "default": 1,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 8,
+          "default": 1
+        },
+        "bindable": false
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "spacing",
+        "type": "number",
+        "required": false,
+        "default": 16,
+        "jsonSchema": {
+          "type": "number",
+          "default": 16
+        },
+        "bindable": false
+      },
+      {
+        "name": "style",
+        "type": "string",
+        "required": false,
+        "default": "solid",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted"
+          ],
+          "default": "solid",
+          "description": "Line style (the component's own prop — its name collides with the block-level CSS style field; inherited naming)."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "orientation": "horizontal",
+      "thickness": 1,
+      "spacing": 16
+    },
+    "canHaveChildren": false,
+    "icon": "―",
+    "traits": [
+      "form-content",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:structure"
+  ]
+}

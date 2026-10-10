@@ -1,0 +1,71 @@
+{
+  "id": "text.prose",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "text",
+  "name": "prose",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Rich long-form body content (Markdown or sanitized HTML) rendered with proper typographic vertical rhythm — the first-party equivalent of a typography/prose plugin, styled entirely from theme tokens",
+    "useCases": [
+      "Article or blog post body bound to a CMS field",
+      "Documentation page section with headings, lists, code, and links",
+      "Long terms-of-service / policy copy that needs readable rhythm"
+    ],
+    "composesWith": [
+      "layout.section",
+      "layout.container",
+      "text.heading",
+      "container.card",
+      "control.link"
+    ],
+    "antiPatterns": [
+      "A single short line or label — use text.text",
+      "A standalone heading — use text.heading",
+      "Untrusted third-party HTML expecting full passthrough — prose sanitizes to a conservative allowlist (no script/iframe/event handlers)"
+    ],
+    "implementation": "Further anti-patterns:\n- Interactive form markup — prose strips form/input/button; use form.* blocks\n\nFurther use cases:\n- Any multi-paragraph rich text where individual text blocks would be tedious"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "content",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "Markdown string (preferred) OR a raw HTML fragment. Markdown supports headings (#), lists, **bold**, *italic*, `code`, fenced code, > blockquote, links and images. HTML is sanitized to a conservative tag/attribute allowlist. Bindable to a data source.",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": true
+      },
+      {
+        "name": "maxWidth",
+        "type": "number | string",
+        "required": false,
+        "description": "Reading-column max width. Numbers → px; strings (e.g. '65ch', '720px') pass through. Defaults to a readable measure via the layout container token.",
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "content": ""
+    },
+    "canHaveChildren": false,
+    "icon": "¶",
+    "traits": []
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

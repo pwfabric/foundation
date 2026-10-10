@@ -1,0 +1,14 @@
+{
+  "kind": "file",
+  "purpose": "A short title card for the long-form content showcase",
+  "origin": "provided",
+  "status": "ready",
+  "slots": [
+    {
+      "surfaceKey": "showcase.content",
+      "blockId": "ct-video",
+      "prop": "src"
+    }
+  ],
+  "file": "media/foundation-tour.mp4"
+}

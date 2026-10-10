@@ -1,0 +1,80 @@
+name: Release
+
+# Attaches the pack to a GitHub Release when one is published: the canonical
+# `foundation-<version>.pwpack` (what `pwf add` and `pwf create --foundation`
+# take) and the raw source `.tgz`. The release tag must be `v<version>` from
+# package.json.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    permissions:
+      # gh release upload
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          path: foundation
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          package_json_file: foundation/package.json
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: The tag names the pack's version
+        working-directory: foundation
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          PRERELEASE: ${{ github.event.release.prerelease }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          identity=$(node -p "require('./pwpack.json').version")
+          if [ "$TAG" != "v$version" ] || [ "$identity" != "$version" ]; then
+            echo "tag $TAG, package.json $version, pwpack.json $identity: they must agree"; exit 1
+          fi
+          # A prerelease version (1.1.0-rc.0) is a GitHub Pre-release, a stable
+          # one is not — the same rule as the engine's releases.
+          case "$version" in *-*) want=true ;; *) want=false ;; esac
+          if [ "$PRERELEASE" != "$want" ]; then
+            echo "v$version: the release must be marked Pre-release=$want"; exit 1
+          fi
+
+      # The engine version package.json names, from npm when it is there;
+      # otherwise the engine's matching release tag, built from source.
+      - name: Engine
+        working-directory: foundation
+        run: |
+          want=$(node -p "require('./package.json').devDependencies['@pwfabric/pack']")
+          if npm view "@pwfabric/pack@$want" version >/dev/null 2>&1; then
+            echo "engine $want from npm"
+          else
+            echo "engine $want not on npm: building tag v$want from source"
+            git clone --depth 1 --branch "v$want" https://github.com/pwfabric/pwfabric ../pwfabric
+            (cd ../pwfabric && pnpm install --frozen-lockfile && pnpm -r --filter "@pwfabric/runtime..." --filter "@pwfabric/pack..." build)
+            node scripts/use-engine.mjs ../pwfabric
+          fi
+          pnpm install --no-frozen-lockfile
+
+      - name: Test
+        working-directory: foundation
+        run: pnpm test
+
+      - name: Build and attach the archives
+        working-directory: foundation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          pnpm build
+          node scripts/export-tgz.mjs --canonical
+          ls -l dist
+          gh release upload "$TAG" dist/*.pwpack dist/*.tgz --repo "$GITHUB_REPOSITORY" --clobber

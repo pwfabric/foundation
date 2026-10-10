@@ -1,0 +1,94 @@
+{
+  "name": "avatar-row-item",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "Horizontal row: avatar on the left, name+meta in the middle, trailing icon on the right. Card-grounded (backgroundColor:var(--pw-color-card), borderRadius:8). The static/hand-written form of 'people list' widgets such as anniversaries/birthdays/welcome — this is the visual reference for repeater[layout=row].",
+  "provenPattern": "Built early and documented later. When the layout=\"row\" prop was added to the repeater block, the aim was to reproduce this pattern exactly.",
+  "knowledge": {
+    "purpose": "Person-list row: avatar on the left, name and meta in the middle, a trailing icon on the right — a single card-grounded row",
+    "useCases": [
+      "The static form of people widgets such as anniversaries, birthdays and new joiners",
+      "Establishing a visual reference before binding data with repeater[layout=row]",
+      "Row layout in a directory or team list"
+    ],
+    "composesWith": [
+      "avatar-group",
+      "data.repeater",
+      "layout.container"
+    ],
+    "antiPatterns": [
+      "Cramming more than three facts into the row — the arrangement was measured for a name + one meta",
+      "Leaving the trailing icon decorative — an icon on the right promises an action; if it goes nowhere, remove it",
+      "Repeating this static row when the data is really a list — in that case use the repeater"
+    ]
+  },
+  "placeholders": {
+    "{{PERSON_NAME}}": "avatar.props.name + text.props.content (isim iki yerde tekrar ediyor)",
+    "{{PERSON_META}}": "subtext — role/department, or a combined status+role string such as 'in 2 days · Project Manager'",
+    "{{TRAILING_ICON}}": "trailing icon name (cake=birthday, award=anniversary, sparkles=welcome)"
+  },
+  "usesBlocks": [
+    "container",
+    "avatar",
+    "text",
+    "icon"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "row",
+      "align": "center",
+      "gap": 10,
+      "padding": 10,
+      "backgroundColor": "var(--pw-color-card)",
+      "borderRadius": 8
+    },
+    "children": [
+      {
+        "id": "{{ID}}-avatar",
+        "type": "avatar",
+        "props": {
+          "name": "{{PERSON_NAME}}",
+          "size": "md"
+        }
+      },
+      {
+        "id": "{{ID}}-body",
+        "type": "container",
+        "props": {
+          "direction": "column",
+          "gap": 0,
+          "padding": 0
+        },
+        "children": [
+          {
+            "id": "{{ID}}-name",
+            "type": "text",
+            "props": {
+              "content": "{{PERSON_NAME}}",
+              "color": "var(--pw-color-text)"
+            }
+          },
+          {
+            "id": "{{ID}}-meta",
+            "type": "text",
+            "props": {
+              "content": "{{PERSON_META}}",
+              "color": "var(--pw-color-text-muted)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-icon",
+        "type": "icon",
+        "props": {
+          "name": "{{TRAILING_ICON}}",
+          "size": "md",
+          "color": "var(--pw-color-primary)"
+        }
+      }
+    ]
+  }
+}

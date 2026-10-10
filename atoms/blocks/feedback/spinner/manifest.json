@@ -1,0 +1,87 @@
+{
+  "id": "feedback.spinner",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "feedback",
+  "name": "spinner",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Indeterminate loading indicator shown while content or an action is in progress",
+    "useCases": [
+      "Inline loading state on a button or panel",
+      "Placeholder while data is being fetched",
+      "Pending state for an async operation"
+    ],
+    "composesWith": [
+      "control.button",
+      "container.card",
+      "empty-state",
+      "feedback.toast"
+    ],
+    "antiPatterns": [
+      "Known progress percentage — a spinner cannot say how far along the work is",
+      "Skeleton placeholder for layout — use data.skeleton",
+      "Blocking full-page overlay — a spinner marks one region, it does not block the page"
+    ],
+    "implementation": "Further use cases:\n- Small activity indicator next to a label"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "default": "md",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "bindable": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "variant",
+        "type": "\"primary\" | \"muted\"",
+        "required": false,
+        "default": "primary",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "muted"
+          ],
+          "default": "primary"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "size": "md",
+      "label": "",
+      "variant": "primary"
+    },
+    "canHaveChildren": false,
+    "icon": "◠",
+    "traits": [
+      "inline"
+    ]
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

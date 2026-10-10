@@ -1,0 +1,82 @@
+{
+  "name": "callout",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "Callout box: icon + heading + text. Composition counterpart of the former text/callout block (its behavioural sibling text/alert stays a BLOCK — it has dismiss/variant logic).",
+  "provenPattern": "Converted from a block to a composition under the rule 'arrangement-only → template'; the look was ported from the former block component.",
+  "knowledge": {
+    "purpose": "Callout box of icon, heading and text — draws attention inside the flow",
+    "useCases": [
+      "Giving a warning or a tip inside a section",
+      "Note box in documentation",
+      "Stating the precondition of a step"
+    ],
+    "composesWith": [
+      "text.alert"
+    ],
+    "antiPatterns": [
+      "Using it for a dismissible/stateful alert — that is the text/alert block's job",
+      "Several callouts in one section — when all are emphasised, none is",
+      "Picking an icon unrelated to the text"
+    ]
+  },
+  "placeholders": {
+    "{{ICON}}": "icon name",
+    "{{TITLE}}": "title",
+    "{{BODY}}": "text"
+  },
+  "usesBlocks": [
+    "container",
+    "icon",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "row",
+      "gap": 12,
+      "padding": 16,
+      "borderRadius": 10,
+      "backgroundColor": "color-mix(in srgb, var(--pw-color-primary) 8%, transparent)"
+    },
+    "children": [
+      {
+        "id": "{{ID}}-icon",
+        "type": "icon",
+        "props": {
+          "name": "{{ICON}}",
+          "size": 20,
+          "color": "var(--pw-color-primary)"
+        }
+      },
+      {
+        "id": "{{ID}}-body",
+        "type": "container",
+        "props": {
+          "direction": "column",
+          "gap": 4
+        },
+        "children": [
+          {
+            "id": "{{ID}}-title",
+            "type": "text",
+            "props": {
+              "content": "{{TITLE}}"
+            },
+            "style": {
+              "fontWeight": "600"
+            }
+          },
+          {
+            "id": "{{ID}}-text",
+            "type": "text",
+            "props": {
+              "content": "{{BODY}}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

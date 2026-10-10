@@ -1,0 +1,103 @@
+{
+  "id": "platform/interaction",
+  "kind": "capability",
+  "version": "1.0.0",
+  "name": "Interaction Rules",
+  "description": "Event-driven interaction rules — attach triggers and actions to surface events",
+  "tags": [
+    "interaction",
+    "events",
+    "automation"
+  ],
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Declarative rules that listen to surface events and run actions (set state, mutate entity, navigate, emit event)",
+    "useCases": [
+      "When form submits successfully, navigate to a confirmation surface",
+      "When user clicks a button, open a modal and prefill its data",
+      "When entity changes, refresh a dependent table",
+      "Conditional show/hide of a block based on form values"
+    ],
+    "composesWith": [
+      "form.form",
+      "control.button",
+      "container.accordion",
+      "platform/persistence",
+      "platform/navigation"
+    ],
+    "antiPatterns": [
+      "Long imperative scripts — interaction rules should be short and declarative",
+      "Hidden side-effects that bypass capability boundaries (e.g. raw fetch instead of persistence)",
+      "Cycles where rule A triggers rule B that re-triggers A"
+    ]
+  },
+  "config": {
+    "fields": [
+      {
+        "key": "executionMode",
+        "type": "select",
+        "required": false,
+        "defaultValue": "async",
+        "label": "Execution Mode",
+        "description": "How behavior actions are executed when a trigger fires",
+        "options": [
+          {
+            "value": "sync",
+            "label": "Synchronous",
+            "description": "Actions block the event chain until complete"
+          },
+          {
+            "value": "async",
+            "label": "Asynchronous",
+            "description": "Actions run in background without blocking"
+          }
+        ]
+      },
+      {
+        "key": "maxConcurrent",
+        "type": "number",
+        "required": false,
+        "defaultValue": 5,
+        "label": "Max Concurrent",
+        "description": "Maximum number of behaviors that can execute simultaneously",
+        "constraints": {
+          "min": 1,
+          "max": 20
+        }
+      },
+      {
+        "key": "errorPolicy",
+        "type": "select",
+        "required": false,
+        "defaultValue": "log",
+        "label": "Error Policy",
+        "description": "How errors in behavior actions are handled",
+        "options": [
+          {
+            "value": "ignore",
+            "label": "Ignore",
+            "description": "Silently swallow errors"
+          },
+          {
+            "value": "log",
+            "label": "Log",
+            "description": "Log errors to console without stopping execution"
+          },
+          {
+            "value": "halt",
+            "label": "Halt",
+            "description": "Stop the behavior chain on first error"
+          }
+        ]
+      },
+      {
+        "key": "debugMode",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": false,
+        "label": "Debug Mode",
+        "description": "Emit detailed trace events for behavior execution"
+      }
+    ]
+  }
+}

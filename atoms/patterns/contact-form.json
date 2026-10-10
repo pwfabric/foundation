@@ -1,0 +1,133 @@
+{
+  "name": "contact-form",
+  "role": "band",
+  "body": "flow",
+  "description": "Two-column contact band: heading/text on the left, form on the right. Sits near the page's close.",
+  "provenPattern": "A survey of 54 sector demo homepages: this band appears in 23 of them, mean vertical position 0.68 (0 = top of page, 1 = bottom). Third most common band; almost always right before a map",
+  "knowledge": {
+    "purpose": "Two-column contact band with heading and text on the left, a form on the right; sits near the page's close",
+    "useCases": [
+      "Contact/quote form at the end of a marketing page",
+      "Event registration band",
+      "Demo talebi toplama"
+    ],
+    "composesWith": [
+      "form.form",
+      "form.input"
+    ],
+    "antiPatterns": [
+      "Putting the form at the top of the page — this band was built for the visitor who has decided at the end of the reading path",
+      "More than four required fields — completion drops",
+      "Leaving fields without labels, placeholder only",
+      "Using it back to back with a call-to-action band on one page — two conversion calls eat each other's emphasis"
+    ]
+  },
+  "mobileCollapse": "Text on top, form below; fields full width.",
+  "placeholders": {
+    "{{HEADING}}": "band heading",
+    "{{SUBHEADING}}": "contact invitation text",
+    "{{ACTION}}": "form.props.action — the submit target",
+    "{{SUBMIT_LABEL}}": "form.submitLabel",
+    "{{LABEL_NAME}}": "input.label",
+    "{{LABEL_EMAIL}}": "input.label",
+    "{{LABEL_MESSAGE}}": "textarea.label"
+  },
+  "usesBlocks": [
+    "section",
+    "container",
+    "heading",
+    "text",
+    "form",
+    "input",
+    "textarea"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "section",
+    "props": {
+      "paddingY": 64,
+      "gap": 32
+    },
+    "children": [
+      {
+        "id": "{{ID}}-row",
+        "type": "container",
+        "props": {
+          "direction": "row",
+          "gap": 48,
+          "align": "start"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-copy",
+            "type": "container",
+            "props": {
+              "direction": "column",
+              "gap": 12,
+              "maxWidth": 420
+            },
+            "children": [
+              {
+                "id": "{{ID}}-h",
+                "type": "heading",
+                "props": {
+                  "text": "{{HEADING}}",
+                  "level": "h2"
+                }
+              },
+              {
+                "id": "{{ID}}-t",
+                "type": "text",
+                "props": {
+                  "content": "{{SUBHEADING}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              }
+            ]
+          },
+          {
+            "id": "{{ID}}-form",
+            "type": "form",
+            "props": {
+              "action": "{{ACTION}}",
+              "method": "POST",
+              "submitLabel": "{{SUBMIT_LABEL}}",
+              "gap": 12
+            },
+            "children": [
+              {
+                "id": "{{ID}}-name",
+                "type": "input",
+                "props": {
+                  "name": "name",
+                  "label": "{{LABEL_NAME}}",
+                  "required": true,
+                  "type": "text"
+                }
+              },
+              {
+                "id": "{{ID}}-email",
+                "type": "input",
+                "props": {
+                  "name": "email",
+                  "type": "email",
+                  "label": "{{LABEL_EMAIL}}",
+                  "required": true
+                }
+              },
+              {
+                "id": "{{ID}}-msg",
+                "type": "textarea",
+                "props": {
+                  "name": "message",
+                  "label": "{{LABEL_MESSAGE}}",
+                  "rows": 4
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "name": "footer",
+  "role": "band",
+  "description": "Site footer band: link columns. The copyright line is NOT here — the shell's copyright slot carries it. The composition equivalent of the retired layout/footer block.",
+  "provenPattern": "Converted from a block to a composition under the rule 'arrangement-only → template'.",
+  "knowledge": {
+    "purpose": "End-of-page navigation and identity band",
+    "useCases": [
+      "Marketing page footer",
+      "Documentation site footer"
+    ],
+    "composesWith": [
+      "legal-footnote"
+    ],
+    "antiPatterns": [
+      "A second CTA band inside the footer",
+      "More than seven links per column",
+      "Writing the copyright line here — every shell carries its own copyright slot ({{FOOTER}} in shell-topbar-flow, {{LEGAL}} in the others); this band carries the link columns only. Filling both prints the copyright twice"
+    ]
+  },
+  "placeholders": {
+    "{{COL_TITLE_1}}": "heading of link column 1 — e.g. Product",
+    "{{LINK_1_1}}": "link.text — entry 1 of column 1",
+    "{{LINK_1_1_HREF}}": "link href — entry 1 of column 1; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{LINK_1_2}}": "link.text — entry 2 of column 1",
+    "{{LINK_1_2_HREF}}": "link href — entry 2 of column 1; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{LINK_1_3}}": "link.text — entry 3 of column 1",
+    "{{LINK_1_3_HREF}}": "link href — entry 3 of column 1; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{COL_TITLE_2}}": "heading of link column 2 — e.g. Company",
+    "{{LINK_2_1}}": "link.text — entry 1 of column 2",
+    "{{LINK_2_1_HREF}}": "link href — entry 1 of column 2; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{LINK_2_2}}": "link.text — entry 2 of column 2",
+    "{{LINK_2_2_HREF}}": "link href — entry 2 of column 2; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{LINK_2_3}}": "link.text — entry 3 of column 2",
+    "{{LINK_2_3_HREF}}": "link href — entry 3 of column 2; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{COL_TITLE_3}}": "heading of link column 3 — e.g. Legal",
+    "{{LINK_3_1}}": "link.text — entry 1 of column 3",
+    "{{LINK_3_1_HREF}}": "link href — entry 1 of column 3; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{LINK_3_2}}": "link.text — entry 2 of column 3",
+    "{{LINK_3_2_HREF}}": "link href — entry 2 of column 3; an app route such as /pricing (must resolve, '#' is a finding)",
+    "{{LINK_3_3}}": "link.text — entry 3 of column 3",
+    "{{LINK_3_3_HREF}}": "link href — entry 3 of column 3; an app route such as /pricing (must resolve, '#' is a finding)"
+  },
+  "usesBlocks": [
+    "section",
+    "grid",
+    "container",
+    "heading",
+    "link"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "section",
+    "props": {
+      "paddingY": 40,
+      "gap": 18
+    },
+    "children": [
+      {
+        "id": "{{ID}}-cols",
+        "type": "grid",
+        "props": {
+          "columns": 3,
+          "gap": 24
+        },
+        "children": [
+          {
+            "id": "{{ID}}-c1",
+            "type": "container",
+            "props": {
+              "direction": "column",
+              "gap": 6,
+              "padding": 0
+            },
+            "children": [
+              {
+                "id": "{{ID}}-c1t",
+                "type": "heading",
+                "props": {
+                  "text": "{{COL_TITLE_1}}",
+                  "level": "h5"
+                }
+              },
+              {
+                "id": "{{ID}}-c1l1",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_1_1}}",
+                  "href": "{{LINK_1_1_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              },
+              {
+                "id": "{{ID}}-c1l2",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_1_2}}",
+                  "href": "{{LINK_1_2_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              },
+              {
+                "id": "{{ID}}-c1l3",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_1_3}}",
+                  "href": "{{LINK_1_3_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              }
+            ]
+          },
+          {
+            "id": "{{ID}}-c2",
+            "type": "container",
+            "props": {
+              "direction": "column",
+              "gap": 6,
+              "padding": 0
+            },
+            "children": [
+              {
+                "id": "{{ID}}-c2t",
+                "type": "heading",
+                "props": {
+                  "text": "{{COL_TITLE_2}}",
+                  "level": "h5"
+                }
+              },
+              {
+                "id": "{{ID}}-c2l1",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_2_1}}",
+                  "href": "{{LINK_2_1_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              },
+              {
+                "id": "{{ID}}-c2l2",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_2_2}}",
+                  "href": "{{LINK_2_2_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              },
+              {
+                "id": "{{ID}}-c2l3",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_2_3}}",
+                  "href": "{{LINK_2_3_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              }
+            ]
+          },
+          {
+            "id": "{{ID}}-c3",
+            "type": "container",
+            "props": {
+              "direction": "column",
+              "gap": 6,
+              "padding": 0
+            },
+            "children": [
+              {
+                "id": "{{ID}}-c3t",
+                "type": "heading",
+                "props": {
+                  "text": "{{COL_TITLE_3}}",
+                  "level": "h5"
+                }
+              },
+              {
+                "id": "{{ID}}-c3l1",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_3_1}}",
+                  "href": "{{LINK_3_1_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              },
+              {
+                "id": "{{ID}}-c3l2",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_3_2}}",
+                  "href": "{{LINK_3_2_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              },
+              {
+                "id": "{{ID}}-c3l3",
+                "type": "link",
+                "props": {
+                  "text": "{{LINK_3_3}}",
+                  "href": "{{LINK_3_3_HREF}}",
+                  "color": "var(--pw-color-text-muted)"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "mobileCollapse": "Kolonlar tek sutuna iner.",
+  "body": "flow",
+  "layoutOnly": true
+}

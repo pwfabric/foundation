@@ -1,0 +1,181 @@
+{
+  "id": "layout.bottom-bar",
+  "kind": "block",
+  "version": "0.1.0",
+  "category": "layout",
+  "name": "bottom-bar",
+  "state": "experimental",
+  "knowledge": {
+    "purpose": "Shell block: pins the primary destinations — one per real destination, at most five, never padded to fill the bar — to the BOTTOM edge of the screen; every destination carries an icon AND a label. It stays in place while scrolling and reserves its own height in the flow, so it never covers the page's last band.",
+    "useCases": [
+      "Primary navigation in a narrow-screen-first tool (the bottom-bar shell)",
+      "Switching sections in a one-handed field/mobile app",
+      "The form the persistent left rail TURNS INTO on a narrow screen"
+    ],
+    "composesWith": [
+      "layout.container",
+      "layout.grid",
+      "control.link"
+    ],
+    "antiPatterns": [
+      "Adding a sixth destination — the schema stops at 5; six destinations are a menu, not a bar",
+      "Dropping the label and leaving the icon alone — an icon's meaning is a learned assumption; the label declares it",
+      "Using it as a footer — a footer is read and scrolls, a bottom bar navigates and stays fixed",
+      "Authoring `account` in a receipt or pattern — the runner injects the real visitor; a hand-written one is a fake session"
+    ],
+    "implementation": "Further anti-patterns:\n- Repeating the same destination in the top bar — a destination in two places makes it unclear which is right\n\nAccount target: with `account` injected, the bar still holds at most 5 targets and the account is always the last. An item routing to `account.profileHref` (compared as routes: trailing slash, query and hash ignored) is removed and its label reused for the account target and the sheet's Profile entry (precedence for that entry: folded tab label, then account.profileLabel, then \"Profile\"); otherwise, a full bar gives its 5th slot to the account. Tapping opens a bottom sheet (scrim, 44px targets, safe-area padding) with name + email, Profile, links and Sign out — a sheet rather than a jump to the profile page, so sign-out is never hidden behind a page the app may not have. While a fixed bar is mounted it publishes `--pw-bottom-bar-height: <height>px` and `data-pw-bottom-bar-height` on the document root so host overlays can sit above it. Actions: payload.action {type: \"auth:signIn\" | \"auth:signOut\"}."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "items",
+        "type": "array",
+        "required": false,
+        "jsonSchema": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "href": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label"
+            ]
+          },
+          "description": "Navigation destinations: [{label, href?, icon?}] — 3 to 5, each icon + label."
+        },
+        "bindable": true
+      },
+      {
+        "name": "activeHref",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "href of the currently active destination — the matching item gets aria-current=\"page\"."
+        },
+        "bindable": false
+      },
+      {
+        "name": "position",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "fixed",
+            "static"
+          ],
+          "description": "fixed: pinned to the viewport bottom (the real shell behaviour). static: stays in flow — for an editor/preview canvas."
+        },
+        "bindable": false
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "description": "Bar height (px). The space reserved in flow is the same value."
+        },
+        "bindable": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Accessible name of the nav element."
+        },
+        "bindable": false
+      },
+      {
+        "name": "account",
+        "type": "{state: 'signed-in' | 'signed-out', name?, email?, avatarSrc?, profileHref?, profileLabel?, links?: [{label, href}], signInLabel?, signOutLabel?}",
+        "required": false,
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "enum": [
+                "signed-in",
+                "signed-out"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "description": "Display name (falls back to email)."
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatarSrc": {
+              "type": "string"
+            },
+            "profileHref": {
+              "type": "string",
+              "description": "App route of the profile page, already rewritten by the runner."
+            },
+            "profileLabel": {
+              "type": "string",
+              "description": "Localised label of the Profile menu entry. Default \"Profile\"; a folded bottom-bar tab keeps its own label."
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ]
+              },
+              "description": "Extra account-menu entries, listed after Profile."
+            },
+            "signInLabel": {
+              "type": "string",
+              "description": "Default \"Sign in\"."
+            },
+            "signOutLabel": {
+              "type": "string",
+              "description": "Default \"Sign out\"."
+            }
+          },
+          "required": [
+            "state"
+          ],
+          "description": "The published app's visitor, INJECTED BY THE RUNNER — do not author it. Rendered as the LAST target (avatar + label; \"Sign in\" when signed out) and opens a bottom sheet with profile, links and sign out. A destination whose href equals profileHref (trailing slash / query ignored) is folded into it, keeping its label; otherwise the account takes the 5th slot."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "items": [],
+      "position": "fixed",
+      "height": 60,
+      "ariaLabel": "Bottom navigation"
+    },
+    "canHaveChildren": false
+  },
+  "tags": [
+    "tier:structure"
+  ]
+}

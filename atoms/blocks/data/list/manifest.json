@@ -1,0 +1,119 @@
+{
+  "id": "data.list",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "data",
+  "name": "list",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Vertical list of items rendered from a data source with optional item template",
+    "useCases": [
+      "Recent activity feed",
+      "Sidebar of navigation entries",
+      "Notification list"
+    ],
+    "composesWith": [
+      "layout.container",
+      "container.card",
+      "platform/persistence",
+      "platform/entities"
+    ],
+    "antiPatterns": [
+      "Tabular data with multiple comparable columns — a list is one column of items, with no header row",
+      "Editable form rows — use form.form with repeated inputs",
+      "Image gallery — use layout.grid + media.image"
+    ],
+    "implementation": "Further use cases:\n- Comment thread display"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "items",
+        "type": "string[]",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "bindable": true
+      },
+      {
+        "name": "spacing",
+        "type": "number",
+        "required": false,
+        "default": 8,
+        "jsonSchema": {
+          "type": "number",
+          "default": 8
+        },
+        "bindable": false
+      },
+      {
+        "name": "fontSize",
+        "type": "number",
+        "required": false,
+        "default": 14,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 8,
+          "maximum": 96,
+          "default": 14
+        },
+        "bindable": false
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "iconColor",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "style",
+        "type": "string",
+        "required": false,
+        "default": "disc",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "disc",
+            "decimal",
+            "none",
+            "check"
+          ],
+          "default": "disc",
+          "description": "List marker style (the component's own prop — not the block-level CSS style field; inherited naming)."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "items": [],
+      "spacing": 8,
+      "fontSize": 14
+    },
+    "canHaveChildren": false,
+    "icon": "▤",
+    "traits": [
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:data"
+  ]
+}

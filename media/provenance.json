@@ -1,0 +1,12 @@
+{
+  "formatVersion": "1.0",
+  "items": [
+    {
+      "path": "media/foundation-tour.mp4",
+      "hash": "sha256:b003036965d13f99eb678c398a4decdfcc0efcf3b0c34626bf6ccfcae155a8d1",
+      "source": "provided",
+      "createdAt": "2026-10-09T00:00:00Z",
+      "license": "Apache-2.0"
+    }
+  ]
+}

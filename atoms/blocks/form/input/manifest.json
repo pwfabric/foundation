@@ -1,0 +1,257 @@
+{
+  "id": "form.input",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "form",
+  "name": "input",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Single-line text input field bound to form state with validation messaging",
+    "useCases": [
+      "Email or username field",
+      "Single-line free text (title, name, search query)",
+      "Inline editable cell"
+    ],
+    "composesWith": [
+      "form.form",
+      "control.button",
+      "platform/entities"
+    ],
+    "antiPatterns": [
+      "Multi-line text — use form.textarea",
+      "Choice from a fixed list — use form.select",
+      "Boolean value — a text field is the wrong shape; offer both answers with form.segmented-control"
+    ],
+    "implementation": "Further use cases:\n- Numeric value entry (with type=number)\n\nWith `stateKey` the field carries a declarative setState on change, the same way segmented-control and pagination do: a data source whose query reads `{{state.<key>}}` re-queries as the visitor types."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "type",
+        "type": "\"text\" | \"email\" | \"password\" | \"number\" | \"tel\" | \"url\" | \"search\" | \"date\" | \"time\" | \"datetime-local\" | \"textarea\"",
+        "required": true,
+        "default": "text",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "text",
+            "email",
+            "password",
+            "number",
+            "tel",
+            "url",
+            "search",
+            "date",
+            "time",
+            "datetime-local",
+            "textarea"
+          ],
+          "default": "text",
+          "description": "textarea renders a multi-line field (prefer form.textarea, which carries resize and maxLength)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "minLength",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 0
+        },
+        "bindable": false
+      },
+      {
+        "name": "maxLength",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1
+        },
+        "bindable": false
+      },
+      {
+        "name": "min",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Lowest accepted value — a number for type=number, an ISO date/time string for date/time types."
+        },
+        "bindable": false
+      },
+      {
+        "name": "max",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Highest accepted value — a number for type=number, an ISO date/time string for date/time types."
+        },
+        "bindable": false
+      },
+      {
+        "name": "step",
+        "type": "number | \"any\"",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "string",
+              "enum": [
+                "any"
+              ]
+            }
+          ],
+          "description": "Granularity for number/date/time values. Set 0.01 (or \"any\") for money and decimals — without it type=number accepts whole numbers only."
+        },
+        "bindable": false
+      },
+      {
+        "name": "pattern",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "rows",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "bindable": false
+      },
+      {
+        "name": "leadingIcon",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Name of an icon rendered inside the field on the leading (left) edge. One of: search, check, x, mail, lock, eye, user, phone, calendar, bell, globe. Ignored for type=textarea."
+        },
+        "bindable": false
+      },
+      {
+        "name": "trailingIcon",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Name of an icon rendered inside the field on the trailing (right) edge. One of: search, check, x, mail, lock, eye, user, phone, calendar, bell, globe. Ignored for type=textarea."
+        },
+        "bindable": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Initial value — expression-bindable ({{source[0].Field}}); applied by remount once the data resolves. With display:none it forms the hidden-field pattern."
+        },
+        "bindable": true
+      },
+      {
+        "name": "stateKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "type": "text",
+      "required": false,
+      "disabled": false
+    },
+    "canHaveChildren": false,
+    "allowedParents": [
+      "form",
+      "container"
+    ],
+    "icon": "▭",
+    "traits": [
+      "form-field",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

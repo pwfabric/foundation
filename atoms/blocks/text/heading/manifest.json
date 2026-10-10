@@ -1,0 +1,175 @@
+{
+  "id": "text.heading",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "text",
+  "name": "heading",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Semantic heading (h1–h6) that sets visual and outline hierarchy on a surface",
+    "useCases": [
+      "Section title in a marketing layout",
+      "Page hero h1",
+      "Card title in a list of cards"
+    ],
+    "composesWith": [
+      "layout.section",
+      "layout.container",
+      "container.card",
+      "text.text",
+      "control.link"
+    ],
+    "antiPatterns": [
+      "Body paragraph — use text.text",
+      "Pure visual emphasis without semantic outline — use text.text with style overrides",
+      "Caption beneath an image — use text.text"
+    ],
+    "implementation": "Further use cases:\n- Form section header"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "level",
+        "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\"",
+        "required": true,
+        "default": "h2",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "default": "h2"
+        },
+        "bindable": false
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "textAlign",
+        "type": "\"left\" | \"center\" | \"right\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "gradient",
+        "type": "{ enabled: boolean, from: string, via: string, to: string, direction: \"to-r\" | \"to-l\" | \"to-t\" | \"to-b\" | \"to-tr\" | \"to-tl\" | \"to-br\" | \"to-bl\" }",
+        "required": false,
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "from": {
+              "type": "string",
+              "default": "#3b82f6"
+            },
+            "via": {
+              "type": "string"
+            },
+            "to": {
+              "type": "string",
+              "default": "#8b5cf6"
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "to-r",
+                "to-l",
+                "to-t",
+                "to-b",
+                "to-tr",
+                "to-tl",
+                "to-br",
+                "to-bl"
+              ],
+              "default": "to-r"
+            }
+          }
+        },
+        "bindable": false
+      },
+      {
+        "name": "accentBar",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "description": "Short accent bar to the left of the heading (theme accent token).",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "uppercase",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "description": "Uppercases the text with CSS (beware the Turkish İ/I innerText trap).",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "rich",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "Opt-in inline emphasis: when true, `text` may carry mini-markdown — **bold**, *italic*, ~~strike~~ (error-token underline), ==mark== (accent highlight with on-accent ink). No HTML is accepted; unknown syntax renders literally.",
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "text": "",
+      "level": "h2"
+    },
+    "canHaveChildren": false,
+    "icon": "H",
+    "traits": [
+      "form-content",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

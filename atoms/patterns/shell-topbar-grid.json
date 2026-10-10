@@ -1,0 +1,105 @@
+{
+  "name": "shell-topbar-grid",
+  "role": "shell",
+  "description": "Top navigation + a widget grid of independent tiles. The main region is not a single content area.",
+  "provenPattern": "Shell matrix — chrome × body: 5 chromes × 4 bodies = 20, four eliminated (with no chrome a grid has no way out, a dense surface has no interaction, a split refutes itself) → 16 cells.",
+  "knowledge": {
+    "purpose": "The frame of a scanned board: every tile is fed from its own source; the user scans, not reads",
+    "useCases": [
+      "Internal announcement centre",
+      "Work board",
+      "News and sharing stream"
+    ],
+    "composesWith": [
+      "card-grid"
+    ],
+    "antiPatterns": [
+      "Turning the tiles into one long content area — that is the flow body",
+      "Giving one tile the full page height — a board must be scanned at a glance",
+      "Leaving scan order to grid order — on a narrow screen priority must be declared SEPARATELY"
+    ]
+  },
+  "mobileCollapse": "The top bar collapses into a drawer; links are listed in one column. The grid collapses to one column and tile priority is declared SEPARATELY — grid order does not give it.",
+  "placeholders": {
+    "{{HEADER}}": "top bar — brand name",
+    "{{NAV_LINKS}}": "top-bar links: [{label, href}]",
+    "{{MAIN}}": "main slot — TILES only (cards, stats, charts): every child is one grid cell, so a page band does not go here",
+    "{{LEGAL}}": "copyright / legal line — PLAIN TEXT, one line (e.g. \"© 2026 Acme Ltd.\"). The ONLY place the copyright appears: the `footer` band carries link columns and never a copyright. Leave it empty (\"\") for none"
+  },
+  "usesBlocks": [
+    "container",
+    "grid",
+    "navbar",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "padding": 0
+    },
+    "layout": {
+      "widthScope": {
+        "xs": "viewport"
+      }
+    },
+    "children": [
+      {
+        "id": "{{ID}}-nav",
+        "type": "navbar",
+        "props": {
+          "logoText": "{{HEADER}}",
+          "links": "{{NAV_LINKS}}",
+          "sticky": true
+        },
+        "layout": {
+          "widthScope": {
+            "xs": "viewport"
+          }
+        }
+      },
+      {
+        "id": "{{ID}}-content",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "style": {
+          "width": "100%",
+          "maxWidth": "var(--pw-layout-container-max-width, 1280px)",
+          "marginInline": "auto",
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))",
+          "boxSizing": "border-box"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-main",
+            "type": "grid",
+            "props": {
+              "columns": 3,
+              "minChildWidth": 240
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-legal",
+        "type": "text",
+        "props": {
+          "content": "{{LEGAL}}",
+          "textAlign": "center",
+          "color": "var(--pw-color-text-muted)"
+        },
+        "style": {
+          "fontSize": "0.8rem",
+          "padding": "16px"
+        }
+      }
+    ]
+  },
+  "chrome": "topbar",
+  "body": "grid",
+  "layoutOnly": true
+}

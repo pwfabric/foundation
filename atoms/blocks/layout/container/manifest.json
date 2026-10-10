@@ -1,0 +1,233 @@
+{
+  "id": "layout.container",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "layout",
+  "name": "container",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Generic flex layout box that arranges its children in a row or column with gap, padding, and alignment",
+    "useCases": [
+      "Group related blocks horizontally or vertically",
+      "Add consistent spacing between siblings without bespoke CSS",
+      "Wrap a child to apply a background or rounded corner"
+    ],
+    "composesWith": [
+      "layout.section",
+      "layout.grid",
+      "container.card",
+      "form.form"
+    ],
+    "antiPatterns": [
+      "Fixed-column responsive layouts — use layout.grid for those",
+      "Section-level page banding — use layout.section for full-bleed regions",
+      "Nesting containers many levels deep just to add margin — flatten the tree"
+    ],
+    "implementation": "Further anti-patterns:\n- Creating an empty container then filling it in a later step — add the container WITH its children inline in one step (an empty + filled pair renders a blank duplicate)\n\nFurther use cases:\n- Split a screen area into balanced left/right or top/bottom regions\n\nStacking law: on xs a row with two or more non-intrinsic children is drawn as a column; set keepRow: true only for ratio compositions where the side-by-side proportion is the design (mosaics, poster grids)."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "direction",
+        "type": "\"row\" | \"column\" | \"row-reverse\" | \"column-reverse\"",
+        "required": false,
+        "default": "column",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "row",
+            "column",
+            "row-reverse",
+            "column-reverse"
+          ],
+          "default": "column"
+        },
+        "bindable": false
+      },
+      {
+        "name": "gap",
+        "type": "number",
+        "required": false,
+        "default": 16,
+        "jsonSchema": {
+          "type": "number",
+          "default": 16
+        },
+        "bindable": false
+      },
+      {
+        "name": "padding",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false,
+        "description": "Inner padding in px. Defaults to 16 when the container paints a ground or border, to 0 when it only arranges — a pure layout container adds no space of its own."
+      },
+      {
+        "name": "align",
+        "type": "\"start\" | \"center\" | \"end\" | \"stretch\" | \"baseline\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "stretch",
+            "baseline"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "justify",
+        "type": "\"start\" | \"center\" | \"end\" | \"between\" | \"around\" | \"evenly\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "between",
+            "around",
+            "evenly"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "wrap",
+        "type": "boolean",
+        "required": false,
+        "jsonSchema": {
+          "type": "boolean"
+        },
+        "bindable": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "borderRadius",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "minHeight",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "maxWidth",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "aspectRatio",
+        "type": "number | string",
+        "required": false,
+        "description": "CSS aspect-ratio for the box, e.g. '16/9', '4/3', '1/1', '21/9', '3/2', or a number. Sets the ratio without forcing a fixed height.",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "backgroundGradient",
+        "type": "string",
+        "required": false,
+        "description": "A CSS gradient painted over backgroundColor (e.g. linear-gradient(135deg, var(--pw-color-primary), var(--pw-color-accent))).",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "borderColor",
+        "type": "string",
+        "required": false,
+        "description": "Border colour; defaults to var(--pw-color-border) when only borderWidth is given.",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "borderWidth",
+        "type": "number",
+        "required": false,
+        "description": "Border width in px; defaults to 1 when only borderColor is given.",
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false
+      },
+      {
+        "name": "keepRow",
+        "type": "boolean",
+        "required": false,
+        "description": "Exception that keeps the row from turning into a column on xs screens; for ratio compositions. Applied by the runtime.",
+        "jsonSchema": {
+          "type": "boolean"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "direction": "column",
+      "gap": 16
+    },
+    "canHaveChildren": true,
+    "icon": "▢",
+    "traits": [
+      "form-content",
+      "tab-panel",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:structure"
+  ]
+}

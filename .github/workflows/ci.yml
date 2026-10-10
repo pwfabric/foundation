@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# No secrets: a pull request from a fork runs exactly what a maintainer's does.
+permissions:
+  contents: read
+
+jobs:
+  # Against the engine's main branch, built from source and linked in. This
+  # is what catches an engine change that breaks the pack before it ships,
+  # and it is the only leg until the engine version this pack names is on npm.
+  engine-main:
+    name: test (engine main, from source)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          path: foundation
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          repository: pwfabric/pwfabric
+          persist-credentials: false
+          path: pwfabric
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          package_json_file: foundation/package.json
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - name: Build the engine packages the pack uses
+        working-directory: pwfabric
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm -r --filter "@pwfabric/runtime..." --filter "@pwfabric/pack..." build
+      - name: Link them in
+        working-directory: foundation
+        run: |
+          node scripts/use-engine.mjs ../pwfabric
+          pnpm install --no-frozen-lockfile
+      - name: Typecheck
+        working-directory: foundation
+        run: pnpm typecheck
+      - name: Test (pwpack.json, integrity, fabrications, behaviour)
+        working-directory: foundation
+        run: pnpm test
+      - name: Build both archives
+        working-directory: foundation
+        run: |
+          pnpm build
+          node scripts/export-tgz.mjs --canonical
+
+  # Against the engine version package.json names, from npm — the pack as a
+  # user installs it. Skips itself (and says so) while that version is not on
+  # the registry yet.
+  engine-release:
+    name: test (engine from npm)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - name: Is the named engine version on npm?
+        id: npm
+        run: |
+          want=$(node -p "require('./package.json').devDependencies['@pwfabric/pack']")
+          if npm view "@pwfabric/pack@$want" version >/dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "@pwfabric/pack@$want is not on npm yet: this leg is skipped" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+      - if: steps.npm.outputs.found == 'true'
+        run: pnpm install --no-frozen-lockfile
+      - if: steps.npm.outputs.found == 'true'
+        run: pnpm typecheck
+      - if: steps.npm.outputs.found == 'true'
+        run: pnpm test
+      - if: steps.npm.outputs.found == 'true'
+        run: |
+          pnpm build
+          node scripts/export-tgz.mjs --canonical
+
+  ci:
+    if: always()
+    needs: [engine-main, engine-release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every job succeeded
+        env:
+          MAIN: ${{ needs.engine-main.result }}
+          RELEASE: ${{ needs.engine-release.result }}
+        run: |
+          echo "engine-main: $MAIN"; echo "engine-release: $RELEASE"
+          [ "$MAIN" = success ] && [ "$RELEASE" = success ]

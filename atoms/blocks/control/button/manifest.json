@@ -1,0 +1,376 @@
+{
+  "id": "control.button",
+  "kind": "block",
+  "version": "1.1.0",
+  "category": "control",
+  "name": "button",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Clickable trigger for an action, navigation, or form submit — primary interactive control",
+    "useCases": [
+      "Form submit",
+      "Primary call-to-action on a marketing page",
+      "Modal confirm or cancel",
+      "Wizard step navigation on one page — action setState step, sections gated by visibleWhen"
+    ],
+    "composesWith": [
+      "form.form",
+      "layout.container",
+      "layout.section",
+      "platform/navigation",
+      "platform/interaction"
+    ],
+    "antiPatterns": [
+      "Plain text styled as a button — use control.link for navigation",
+      "Multiple primary buttons in the same visual area",
+      "Buttons that are actually on/off switches — a button fires an action and holds no state; a visible two-way choice is form.segmented-control",
+      "href and action on the same button — href navigates first and the action never runs; give a button one job"
+    ],
+    "implementation": "CLICK WRITES STATE — `action`: one action or a list, run in order on the click (never on other events). Same shape as a behavior's actions: setState {key, value}, refresh {sourceId}, refreshAll, showBlock/hideBlock {blockId}, navigate {url}.\nWizard on one page: initialState {\"step\": 1}; sections carry visibleWhen \"{{state.step == 1}}\", \"{{state.step == 2}}\" …; \"Next\" → \"action\": [{\"type\":\"setState\",\"key\":\"step\",\"value\":2},{\"type\":\"setState\",\"key\":\"stepError\",\"value\":\"\"}]; \"Back\" → {\"type\":\"setState\",\"key\":\"step\",\"value\":1}.\nInside a repeat the action resolves per row, so {\"type\":\"setState\",\"key\":\"selectedId\",\"value\":\"{{item.id}}\"} writes that row's id. To open a detail PAGE from a row use a link instead: href \"/product?id={{item.id}}\" — the published app seeds state.id from the address.\nIf href is set it wins: the button navigates and the action does not run. Where it opens: `target` (_self | _blank) decides; unset, an external absolute http(s) address opens in a new tab (noopener, noreferrer) like the link block, while relative addresses, # and same-origin addresses stay in this tab; mailto: and tel: are unchanged. Without href the button emits its click and the runtime runs the action.\n\nLabel weight follows the theme voice: font-weight reads var(--pw-font-weight-heading, 600) — a fixed 500 made every theme’s controls look alike while headingWeight runs 400–800.\nCorners: border-radius reads var(--pw-button-radius, var(--pw-border-radius)) — a theme sets --pw-button-radius (styleVariables) for pill or square buttons without changing the corners of cards and inputs; unset, buttons follow the theme corner."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "variant",
+        "type": "\"primary\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\"",
+        "required": false,
+        "default": "primary",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary",
+            "outline",
+            "ghost",
+            "destructive"
+          ],
+          "default": "primary"
+        },
+        "bindable": false
+      },
+      {
+        "name": "size",
+        "type": "\"small\" | \"medium\" | \"large\"",
+        "required": false,
+        "default": "medium",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "bindable": false
+      },
+      {
+        "name": "href",
+        "type": "string | \"\"",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": ""
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "target",
+        "type": "\"_self\" | \"_blank\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "_self",
+            "_blank"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "iconPosition",
+        "type": "\"left\" | \"right\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "action",
+        "type": "SurfaceAction | SurfaceAction[]",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "setState"
+                    },
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {}
+                  },
+                  "required": [
+                    "type",
+                    "key"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "refresh"
+                    },
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "sourceId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "refreshAll"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "showBlock"
+                    },
+                    "blockId": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "blockId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "hideBlock"
+                    },
+                    "blockId": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "blockId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "navigate"
+                    },
+                    "url": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "url"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "setState"
+                      },
+                      "key": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "value": {}
+                    },
+                    "required": [
+                      "type",
+                      "key"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "refresh"
+                      },
+                      "sourceId": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "sourceId"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "refreshAll"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "showBlock"
+                      },
+                      "blockId": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "blockId"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "hideBlock"
+                      },
+                      "blockId": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "blockId"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "navigate"
+                      },
+                      "url": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "url"
+                    ]
+                  }
+                ]
+              },
+              "minItems": 1
+            }
+          ]
+        },
+        "bindable": true
+      }
+    ],
+    "defaultProps": {
+      "label": "",
+      "variant": "primary",
+      "size": "medium",
+      "disabled": false,
+      "fullWidth": false
+    },
+    "canHaveChildren": false,
+    "icon": "⊡",
+    "traits": [
+      "form-content",
+      "inline",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

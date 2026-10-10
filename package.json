@@ -1,0 +1,58 @@
+{
+  "name": "@pwfabric/foundation",
+  "version": "1.0.0",
+  "description": "PWFabric Foundation - the standard library of the PWFabric spec: the core block vocabulary (layout, text, controls, forms, data, feedback, media), the top-bar, bottom-bar and chrome-less shells with their page parts, two reference themes, the icon dictionary, four capabilities and the REST connector. Self-contained: every block is placed on its own showcase pages.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "node scripts/check-pwpack-json.mjs && node scripts/check-integrity.mjs && node scripts/audit-fabrications.mjs && vitest run",
+    "build": "node scripts/export-tgz.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "private": true,
+  "peerDependencies": {
+    "@pwfabric/contracts": "^1.0.0-rc.0",
+    "@pwfabric/core": "^1.0.0-rc.0",
+    "@pwfabric/runtime": "^1.0.0-rc.0",
+    "zod": "^3.25.0"
+  },
+  "pwpack": {
+    "displayName": "PWFabric Foundation",
+    "requires": {
+      "tokens": [
+        "--pw-color-primary-ink"
+      ],
+      "packs": []
+    },
+    "cargoDirs": [
+      "blocks",
+      "capabilities",
+      "connectors"
+    ]
+  },
+  "devDependencies": {
+    "@pwfabric/contracts": "1.0.0-rc.0",
+    "@pwfabric/core": "1.0.0-rc.0",
+    "@pwfabric/pack": "1.0.0-rc.0",
+    "@pwfabric/runtime": "1.0.0-rc.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.2.7",
+    "jsdom": "^26.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.2.8",
+    "typescript": "^5.4.0",
+    "vitest": "^2.1.9",
+    "zod": "^3.25.76"
+  },
+  "packageManager": "pnpm@10.27.0",
+  "engines": {
+    "node": "^22",
+    "pnpm": "^10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

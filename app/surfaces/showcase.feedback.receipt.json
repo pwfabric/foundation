@@ -1,0 +1,231 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "showcase.feedback",
+  "version": "1.0.0",
+  "kind": "surface",
+  "appearance": {
+    "use": "theme-zinc"
+  },
+  "title": "States and feedback",
+  "description": "Every way foundation tells the reader what is happening: the four alert tones, a toast, the spinner and the skeleton that holds a place while data loads.",
+  "category": "content",
+  "tags": [
+    "showcase",
+    "feedback"
+  ],
+  "intent": {
+    "purpose": "One page for every state a screen passes through — loading, success, warning, failure — so each feedback block is seen in the place it is used.",
+    "audience": "Whoever composes a surface with foundation. This page is a TECHNIQUE EXEMPLAR, not a customer page: it places every block of its family so nothing foundation ships goes unrendered.",
+    "tone": "Demonstrative and exact — the arrangement is the argument, not the copy.",
+    "successCriteria": "The composer can rebuild this page from foundation alone and keep its 3 stated laws intact."
+  },
+  "capabilities": [],
+  "layout": {},
+  "dataSources": [],
+  "initialState": {},
+  "knowledge": {
+    "purpose": "One page for every state a screen passes through — loading, success, warning, failure — so each feedback block is seen in the place it is used.",
+    "laws": [
+      "A state the reader must act on is an alert in the flow; a state that passes is a toast",
+      "Loading keeps the final shape: a skeleton stands where the content will land, a spinner only where no shape is known",
+      "Tone carries meaning, never decoration — the four alert variants map to info, success, warning and error and nothing else"
+    ],
+    "patternsExercised": [
+      "page-header",
+      "callout",
+      "weave-notice"
+    ]
+  },
+  "blocks": [
+    {
+      "id": "fb-header",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 8,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "fb-title",
+          "type": "heading",
+          "props": {
+            "text": "States and feedback",
+            "level": "h1"
+          }
+        },
+        {
+          "id": "fb-sub",
+          "type": "text",
+          "props": {
+            "content": "Alerts, a toast, the spinner and the skeleton — each where a real screen would use it.",
+            "color": "var(--pw-color-text-muted)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fb-alerts",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "fb-alerts-h",
+          "type": "heading",
+          "props": {
+            "text": "Alerts in the flow",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "fb-alert-info",
+          "type": "alert",
+          "props": {
+            "variant": "info",
+            "title": "Draft saved",
+            "message": "Your changes are kept on this device until you publish.",
+            "showIcon": true
+          }
+        },
+        {
+          "id": "fb-alert-success",
+          "type": "alert",
+          "props": {
+            "variant": "success",
+            "title": "Published",
+            "message": "The page is live for every visitor.",
+            "showIcon": true
+          }
+        },
+        {
+          "id": "fb-alert-warning",
+          "type": "alert",
+          "props": {
+            "variant": "warning",
+            "title": "Two fields need a look",
+            "message": "The address and the phone number are incomplete.",
+            "showIcon": true
+          }
+        },
+        {
+          "id": "fb-alert-error",
+          "type": "alert",
+          "props": {
+            "variant": "error",
+            "title": "Could not reach the server",
+            "message": "Nothing was lost. Try again in a moment.",
+            "showIcon": true,
+            "closeable": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "fb-toast",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "fb-toast-h",
+          "type": "heading",
+          "props": {
+            "text": "A passing confirmation",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "fb-toast-1",
+          "type": "toast",
+          "props": {
+            "variant": "success",
+            "title": "Copied",
+            "message": "The link is on your clipboard.",
+            "dismissible": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "fb-loading",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "fb-loading-h",
+          "type": "heading",
+          "props": {
+            "text": "Loading",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "fb-loading-row",
+          "type": "container",
+          "props": {
+            "direction": "row",
+            "gap": 24,
+            "align": "center"
+          },
+          "children": [
+            {
+              "id": "fb-spinner",
+              "type": "spinner",
+              "props": {
+                "size": "md",
+                "label": "Loading results"
+              }
+            },
+            {
+              "id": "fb-spinner-sm",
+              "type": "spinner",
+              "props": {
+                "size": "sm",
+                "variant": "muted",
+                "label": "Refreshing"
+              }
+            }
+          ]
+        },
+        {
+          "id": "fb-skeleton-card",
+          "type": "card",
+          "props": {
+            "padding": 20,
+            "gap": 12
+          },
+          "children": [
+            {
+              "id": "fb-skeleton-avatar",
+              "type": "skeleton",
+              "props": {
+                "variant": "circle",
+                "width": 48,
+                "height": 48
+              }
+            },
+            {
+              "id": "fb-skeleton-lines",
+              "type": "skeleton",
+              "props": {
+                "variant": "text",
+                "lines": 3
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

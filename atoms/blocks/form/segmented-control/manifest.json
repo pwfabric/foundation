@@ -1,0 +1,182 @@
+{
+  "id": "form.segmented-control",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "form",
+  "name": "segmented-control",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Single-select from a small set of mutually exclusive options rendered as inline pill segments",
+    "useCases": [
+      "Two-to-four way filter on a data band — with stateKey the value reaches the source's query",
+      "View or range switch (Day / Week / Month)",
+      "Layout or sort toggle (Grid / List)",
+      "A short either/or answer inside a form (Yes / No) — give the options real booleans ({value:true} / {value:false}); with a name the shown value is submitted with the form, touched or not, as true/false",
+      "A question with no default answer — allowNone: nothing is lit until the visitor chooses"
+    ],
+    "composesWith": [
+      "form.form",
+      "control.button",
+      "container.card"
+    ],
+    "antiPatterns": [
+      "Many options or long labels — use form.select",
+      "Multi-select — a segmented control holds exactly one value",
+      "Boolean on/off with no names for the two states — segments read as a choice between two named options, not as a switch",
+      "Writing \"\" as the value of the \"no\" option — use value:false (boolean mode) so the answer is a real false, not an empty string"
+    ],
+    "implementation": "Further use cases:\n- Compact mode selector inside a toolbar\n\nNarrow screens: the pills wrap onto a second line (wrap, default true); wrap:false keeps one row that scrolls with a visible scrollbar. Because the block is intrinsic, give it style.flex '0 1 auto' (and minWidth 0) when it sits beside a heading in a row.\n\nSelected state: the chosen pill is filled in the brand with the on-primary ink and a 2px primary-ink edge — it clears 3:1 against the track and the other pills in every preset, light and derived dark. Unselected pills are transparent with muted ink.\n\nBoolean mode: option values true/false (or valueType boolean) write real booleans to stateKey and submit true/false. allowNone (default for a single option): nothing selected until picked."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Field name the value is submitted under when the control sits inside a form (a hidden input carries it)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "options",
+        "type": "Array<{ label: string; value: string | number | boolean; color?: string }>",
+        "required": false,
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ],
+                "description": "Text, or a real boolean for a yes/no answer ({label:\"Yes\", value:true}, {label:\"No\", value:false}) — never \"\" for no."
+              },
+              "color": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "value"
+            ]
+          },
+          "default": []
+        },
+        "bindable": false
+      },
+      {
+        "name": "value",
+        "type": "string | number | boolean | null",
+        "required": false,
+        "jsonSchema": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ],
+          "description": "The selected option (by value, or by its label). Unmatched: the first option — or nothing, with allowNone. null with allowNone: nothing selected."
+        },
+        "bindable": false
+      },
+      {
+        "name": "valueType",
+        "type": "\"text\" | \"boolean\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "text",
+            "boolean"
+          ],
+          "description": "What the control writes to state and submits. boolean: true/false as real booleans (visibleWhen and boolean fields read them; the text \"false\" is truthy). Unset: boolean when every option value is a boolean, else text."
+        },
+        "bindable": false
+      },
+      {
+        "name": "allowNone",
+        "type": "boolean",
+        "required": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "description": "Nothing is selected until the visitor picks, and clicking the lit pill again clears it; state and the form carry \"\" (text) or null (boolean). Unset: on for a one-option control (a consent pill must not start ticked), off otherwise."
+        },
+        "bindable": false
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\"",
+        "required": false,
+        "default": "md",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md"
+          ],
+          "default": "md"
+        },
+        "bindable": false
+      },
+      {
+        "name": "wrap",
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": true,
+          "description": "On a narrow screen the pills wrap onto a second line (default). false keeps a single row that scrolls sideways with a visible scrollbar."
+        },
+        "bindable": false
+      },
+      {
+        "name": "stateKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Surface state key the selected value is written to — on mount (the preselected value, or the first option) and on every change. A data source whose query filter reads {{state.<key>}} re-fetches on change — the control becomes the list's filter, and the filter matches the lit pill from the first render."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "label": "",
+      "options": [],
+      "size": "md"
+    },
+    "canHaveChildren": false,
+    "allowedParents": [
+      "form",
+      "container"
+    ],
+    "icon": "▤",
+    "traits": [
+      "form-field",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

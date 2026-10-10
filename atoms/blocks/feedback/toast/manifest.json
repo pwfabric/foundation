@@ -1,0 +1,108 @@
+{
+  "id": "feedback.toast",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "feedback",
+  "name": "toast",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "In-flow notification banner that conveys a success, info, warning, or error message",
+    "useCases": [
+      "Confirmation after a form is saved",
+      "Inline warning about an incomplete step",
+      "Error message on a failed action"
+    ],
+    "composesWith": [
+      "form.form",
+      "container.card",
+      "control.button"
+    ],
+    "antiPatterns": [
+      "Persistent page-top strip — use an announcement bar block from a pack built on foundation",
+      "Blocking confirmation — a toast is transient and never waits for an answer",
+      "Compact status label — use control.badge"
+    ],
+    "implementation": "Further use cases:\n- Informational tip placed within page content"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"success\" | \"info\" | \"warning\" | \"error\"",
+        "required": false,
+        "default": "info",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "success",
+            "info",
+            "warning",
+            "error"
+          ],
+          "default": "info"
+        },
+        "bindable": false
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "dismissible",
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": true
+        },
+        "bindable": false
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": "",
+          "description": "Name of a leading icon (ICON_PATHS key). Empty picks a per-variant default: success=check, info/warning=bell, error=x."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "variant": "info",
+      "title": "",
+      "message": "",
+      "dismissible": true,
+      "icon": ""
+    },
+    "canHaveChildren": false,
+    "icon": "◧",
+    "traits": [
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

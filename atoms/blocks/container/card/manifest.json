@@ -1,0 +1,192 @@
+{
+  "id": "container.card",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "container",
+  "name": "card",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Bordered surface tile that visually groups related content with optional header / footer",
+    "useCases": [
+      "Dashboard KPI tile",
+      "Item in a layout.grid (product, article, profile)",
+      "Form section grouping"
+    ],
+    "composesWith": [
+      "layout.grid",
+      "layout.container",
+      "media.image",
+      "text.heading",
+      "text.text",
+      "control.button"
+    ],
+    "antiPatterns": [
+      "Whole-page hero — use layout.section",
+      "Modal dialog — a card is inline content, not an overlay",
+      "Single value display — use the stat pattern"
+    ],
+    "implementation": "Further use cases:\n- Settings group container"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "padding",
+        "type": "number",
+        "required": false,
+        "default": 16,
+        "jsonSchema": {
+          "type": "number",
+          "default": 16
+        },
+        "bindable": false
+      },
+      {
+        "name": "gap",
+        "type": "number",
+        "required": false,
+        "default": 16,
+        "jsonSchema": {
+          "type": "number",
+          "default": 16
+        },
+        "bindable": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "borderRadius",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "borderWidth",
+        "type": "number",
+        "required": false,
+        "default": 0,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 0
+        },
+        "bindable": false
+      },
+      {
+        "name": "borderColor",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "shadow",
+        "type": "\"none\" | \"theme\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+        "required": false,
+        "default": "theme",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "none",
+            "theme",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "none",
+          "description": "Card shadow. 'theme' (default) applies the theme's --pw-shadow-card decision (a tonal theme may set none); the enum steps are fixed choices."
+        },
+        "bindable": false
+      },
+      {
+        "name": "glass",
+        "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "default": "none",
+        "description": "Frosted-glass backdrop-blur. Themeable: the translucent fill is a color-mix of the card token, so it follows a theme recolour. Use over a gradient/image section for a glass panel; prefer this over a pinned rgba in block.style.",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "none"
+        },
+        "bindable": false
+      },
+      {
+        "name": "aspectRatio",
+        "type": "number | string",
+        "required": false,
+        "description": "CSS aspect-ratio for the card box, e.g. '16/9', '4/3', '1/1', '21/9', '3/2', or a number. Sets the ratio without forcing a fixed height — the card grows to its ratio against its column width.",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "align",
+        "type": "\"start\" | \"center\" | \"end\" | \"stretch\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "stretch"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "textAlign",
+        "type": "\"left\" | \"center\" | \"right\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "padding": 16,
+      "gap": 16,
+      "borderWidth": 0,
+      "shadow": "theme"
+    },
+    "canHaveChildren": true,
+    "icon": "▭",
+    "traits": []
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

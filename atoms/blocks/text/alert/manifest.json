@@ -1,0 +1,102 @@
+{
+  "id": "text.alert",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "text",
+  "name": "alert",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Inline banner that conveys a status message (info / success / warning / error)",
+    "useCases": [
+      "Form validation summary at the top of a form",
+      "System status (maintenance, downtime)",
+      "Success confirmation after a save"
+    ],
+    "composesWith": [
+      "layout.container",
+      "form.form",
+      "control.button"
+    ],
+    "antiPatterns": [
+      "Tooltip-sized hint — put a short line of text next to the control instead",
+      "Promotional callout — use the callout pattern",
+      "Modal-blocking confirmation — an alert informs inline and never blocks"
+    ],
+    "implementation": "Further use cases:\n- Warning before a risky action"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "variant",
+        "type": "\"info\" | \"success\" | \"warning\" | \"error\"",
+        "required": false,
+        "default": "info",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ],
+          "default": "info"
+        },
+        "bindable": false
+      },
+      {
+        "name": "closeable",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "showIcon",
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": true
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "message": "",
+      "variant": "info",
+      "closeable": false,
+      "showIcon": true
+    },
+    "canHaveChildren": false,
+    "icon": "⚠",
+    "traits": []
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

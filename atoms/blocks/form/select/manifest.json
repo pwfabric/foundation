@@ -1,0 +1,219 @@
+{
+  "id": "form.select",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "form",
+  "name": "select",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Dropdown picker for choosing one option from a fixed list",
+    "useCases": [
+      "Country, currency, or category selector",
+      "Filter dropdown bound to a column",
+      "Status assignment (Active / Inactive)"
+    ],
+    "composesWith": [
+      "form.form",
+      "platform/entities"
+    ],
+    "antiPatterns": [
+      "Multiple selection — a select holds one value",
+      "Action menu — a select chooses a value; actions belong on control.button",
+      "Yes/no choice — use form.segmented-control, where both answers stay visible"
+    ],
+    "implementation": "Further use cases:\n- Group or owner picker"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "options",
+        "type": "[{label, value}] | string[] | rows",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "description": "{label, value}: label is shown, value is submitted; either alone stands for both"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "object",
+                "description": "a bound row — labelKey / valueKey name its fields; without them value falls back to id, label to name then title"
+              }
+            ]
+          },
+          "default": [],
+          "description": "The choices. Accepted shapes: {label, value} objects (label shown, value submitted — an object with only one of them uses it for both); plain strings or numbers (each is both label and value); or rows bound from a source ({{records}}), whose fields labelKey and valueKey name (a dotted path reaches a nested field). Without the keys a row's value falls back to id and its label to name, then title."
+        },
+        "bindable": true
+      },
+      {
+        "name": "labelKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Bound rows: the field shown as each option's label (e.g. \"name\", or \"data.name\"). Same as optionLabelField."
+        },
+        "bindable": false
+      },
+      {
+        "name": "valueKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Bound rows: the field submitted as each option's value (e.g. \"id\"). Same as optionValueField."
+        },
+        "bindable": false
+      },
+      {
+        "name": "optionValueField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Data-bound options: the field holding each item's VALUE (e.g. \"id\"). Mirrors form.radio; same as valueKey."
+        },
+        "bindable": false
+      },
+      {
+        "name": "optionLabelField",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Data-bound options: the field holding each item's VISIBLE LABEL (e.g. \"name\"). Same as labelKey."
+        },
+        "bindable": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | string[]",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "The option selected when the field mounts — expression-bindable ({{record.status}}, {{state.sort}}); applied by remount once the data resolves. A multi-select takes an array or a comma-separated string."
+        },
+        "bindable": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "stateKey",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Surface state key the choice writes, so a bound list re-queries. Mirrors form.segmented-control."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "options": [],
+      "required": false,
+      "disabled": false,
+      "multiple": false
+    },
+    "canHaveChildren": false,
+    "allowedParents": [
+      "form",
+      "container"
+    ],
+    "icon": "▼",
+    "traits": [
+      "form-field"
+    ]
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

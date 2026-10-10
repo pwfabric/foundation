@@ -1,0 +1,144 @@
+{
+  "id": "control.chip",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "control",
+  "name": "chip",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "A small labelled token the reader can act on: choose it, follow it, or dismiss it",
+    "useCases": [
+      "A filter currently narrowing a list, with a way to drop it",
+      "A facet value with its result count",
+      "A tag on an article or a product card",
+      "A session track or topic marker"
+    ],
+    "composesWith": [
+      "container.card",
+      "data.repeater",
+      "layout.container",
+      "control.badge"
+    ],
+    "antiPatterns": [
+      "A status that cannot be acted on — use control.badge",
+      "Collecting new tokens from the reader — a chip displays or filters; it takes no typed input",
+      "A page-level action — use control.button"
+    ],
+    "implementation": "With an href it renders as a link; without one, a button — never a div that only looks clickable. Selection is carried by an inset ring rather than a different fill, because a filter strip shows selected and unselected chips together and a fill change would read as a different kind of chip. Tones mirror control.badge exactly, including its color-mix wash of the label's own token, so a chip stays legible inside a card where --pw-color-text is overridden."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Carried in the event payload so a strip can tell its chips apart. Defaults to the label."
+        },
+        "bindable": true
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "An address makes the chip a link instead of a button."
+        },
+        "bindable": true
+      },
+      {
+        "name": "tone",
+        "type": "\"neutral\" | \"primary\" | \"accent\" | \"success\" | \"warning\" | \"error\"",
+        "required": false,
+        "default": "neutral",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "neutral",
+            "primary",
+            "accent",
+            "success",
+            "warning",
+            "error"
+          ],
+          "default": "neutral"
+        },
+        "bindable": false
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\"",
+        "required": false,
+        "default": "md",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md"
+          ],
+          "default": "md"
+        },
+        "bindable": false
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": true
+      },
+      {
+        "name": "removable",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show a dismiss affordance that emits {removed: true, value}."
+        },
+        "bindable": false
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "description": "How many results this value would leave. Omitted shows nothing."
+        },
+        "bindable": true
+      }
+    ],
+    "defaultProps": {
+      "label": "",
+      "tone": "neutral",
+      "size": "md",
+      "selected": false,
+      "removable": false
+    },
+    "canHaveChildren": false,
+    "icon": "◗",
+    "traits": []
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "id": "control.badge",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "control",
+  "name": "badge",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Compact label that highlights status, count, or category next to other content",
+    "useCases": [
+      "Unread count on a tab or icon",
+      "Status pill (Active / Pending / Archived)",
+      "Category chip on a card",
+      "Status column of a list bound to data — status + variantMap draws each value in its own variant"
+    ],
+    "composesWith": [
+      "control.button",
+      "container.card",
+      "text.heading"
+    ],
+    "antiPatterns": [
+      "Long text labels — use text.text",
+      "Standalone CTA — use control.button",
+      "Form input chip — a badge only labels; it takes no input"
+    ],
+    "implementation": "Further use cases:\n- New / Beta marker beside a feature name\n\nLabel weight follows the theme voice: font-weight reads var(--pw-font-weight-heading, 600) — a fixed 500 made every theme’s controls look alike while headingWeight runs 400–800.\n\nSelected vs unselected: variant primary is filled (brand fill, on-primary ink, 2px primary-ink edge — clears 3:1 against the ground and an unselected badge in every preset, light and derived dark); default is an empty chip with a control edge. A stepper marks its active step with primary and the rest with default.\n\nData-driven status: bind status (or text) to the record field and give variantMap {value: variant}; the badge picks its variant per row."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"primary\" | \"secondary\" | \"accent\" | \"success\" | \"warning\" | \"error\" | \"info\"",
+        "required": false,
+        "default": "default",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "default",
+            "primary",
+            "secondary",
+            "accent",
+            "success",
+            "warning",
+            "error",
+            "info"
+          ],
+          "default": "default",
+          "description": "primary is the SELECTED/active state: a filled brand chip with a 2px ink edge. default is the unselected state: empty, a control edge, muted ink. The status variants are soft tints with an edge."
+        },
+        "bindable": false
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "default": "md",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "bindable": false
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "dismissible",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "status",
+        "type": "string | number | boolean",
+        "required": false,
+        "jsonSchema": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ],
+          "description": "The value variantMap is looked up by — bind the record field here (\"{{item.status}}\"). Unset: the badge text is the key."
+        },
+        "bindable": true
+      },
+      {
+        "name": "variantMap",
+        "type": "Record<string, variant>",
+        "required": false,
+        "jsonSchema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "default",
+              "primary",
+              "secondary",
+              "accent",
+              "success",
+              "warning",
+              "error",
+              "info"
+            ]
+          },
+          "description": "Value → variant, so a status badge bound to data draws each status in its own variant: {\"Sold out\": \"error\", \"Open\": \"success\", \"*\": \"default\"}. Exact match first, then case/space-insensitive, then \"*\", then variant."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "text": "",
+      "variant": "default",
+      "size": "md",
+      "rounded": false
+    },
+    "canHaveChildren": false,
+    "icon": "●",
+    "traits": [
+      "inline",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

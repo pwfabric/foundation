@@ -1,0 +1,112 @@
+{
+  "name": "shell-topbar-split-doc",
+  "role": "shell",
+  "description": "Top navigation + a selecting list on the left, the document read on the right. The selection travels in the URL.",
+  "provenPattern": "Shell matrix — chrome × body: 5 chromes × 4 bodies = 20, four eliminated (with no chrome a grid has no way out, a dense surface has no interaction, a split refutes itself) → 16 cells.",
+  "knowledge": {
+    "purpose": "The frame of a pile of records: select on the left, read on the right — and the selected record is shareable as a link",
+    "useCases": [
+      "Gelen kutusu",
+      "Application/request list and detail",
+      "Document archive"
+    ],
+    "composesWith": [
+      "weave-pair",
+      "weave-notice"
+    ],
+    "antiPatterns": [
+      "Keeping the selection out of the URL — then the record cannot be shared and Back does not work",
+      "Turning the detail pane into a second menu — the detail is the answer",
+      "Using it with a single record — with nothing to choose this is not a split"
+    ]
+  },
+  "mobileCollapse": "The top bar collapses into a drawer; links are listed in one column. Two panes collapse to one: a list page, and selecting NAVIGATES to a detail page — the URL already carries the selection, so Back returns to the list.",
+  "placeholders": {
+    "{{HEADER}}": "top bar — brand name",
+    "{{NAV_LINKS}}": "top-bar links: [{label, href}]",
+    "{{ITEMS}}": "records of the split list: [{id, title, meta?, excerpt?, body?, entries?}]",
+    "{{LIST}}": "heading of the list column",
+    "{{SEL}}": "name of the URL parameter that carries the selection",
+    "{{MAIN}}": "main slot — the action area BELOW the detail (the composer in stream mode)",
+    "{{LEGAL}}": "copyright / legal line — PLAIN TEXT, one line (e.g. \"© 2026 Acme Ltd.\"). The ONLY place the copyright appears: the `footer` band carries link columns and never a copyright. Leave it empty (\"\") for none"
+  },
+  "usesBlocks": [
+    "container",
+    "navbar",
+    "split-view",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "padding": 0
+    },
+    "layout": {
+      "widthScope": {
+        "xs": "viewport"
+      }
+    },
+    "children": [
+      {
+        "id": "{{ID}}-nav",
+        "type": "navbar",
+        "props": {
+          "logoText": "{{HEADER}}",
+          "links": "{{NAV_LINKS}}",
+          "sticky": true
+        },
+        "layout": {
+          "widthScope": {
+            "xs": "viewport"
+          }
+        }
+      },
+      {
+        "id": "{{ID}}-content",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "style": {
+          "width": "100%",
+          "maxWidth": "var(--pw-layout-container-max-width, 1280px)",
+          "marginInline": "auto",
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))",
+          "boxSizing": "border-box"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-main",
+            "type": "split-view",
+            "props": {
+              "items": "{{ITEMS}}",
+              "detailMode": "document",
+              "listTitle": "{{LIST}}",
+              "selectionKey": "{{SEL}}"
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-legal",
+        "type": "text",
+        "props": {
+          "content": "{{LEGAL}}",
+          "textAlign": "center",
+          "color": "var(--pw-color-text-muted)"
+        },
+        "style": {
+          "fontSize": "0.8rem",
+          "padding": "16px"
+        }
+      }
+    ]
+  },
+  "chrome": "topbar",
+  "body": "split",
+  "layoutOnly": true,
+  "detail": "doc"
+}

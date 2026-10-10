@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "showcase.forms",
+  "version": "1.0.0",
+  "kind": "surface",
+  "appearance": {
+    "use": "theme-zinc"
+  },
+  "title": "Forms and choice",
+  "description": "A settings form built only from foundation: text input, a select, a segmented control and a strip of filter chips, closed by the form submit.",
+  "category": "content",
+  "tags": [
+    "showcase",
+    "forms"
+  ],
+  "intent": {
+    "purpose": "One form that uses every way foundation collects or narrows a choice, so each control is seen inside a real form rather than alone.",
+    "audience": "Whoever composes a surface with foundation. This page is a TECHNIQUE EXEMPLAR, not a customer page: it places every block of its family so nothing foundation ships goes unrendered.",
+    "tone": "Demonstrative and exact — the arrangement is the argument, not the copy.",
+    "successCriteria": "The composer can rebuild this page from foundation alone and keep its 3 stated laws intact."
+  },
+  "capabilities": [],
+  "layout": {},
+  "dataSources": [],
+  "initialState": {},
+  "knowledge": {
+    "purpose": "One form that uses every way foundation collects or narrows a choice, so each control is seen inside a real form rather than alone.",
+    "laws": [
+      "Every field in a form has its own name — the form submits what it can name",
+      "Few fixed options side by side are a segmented control; a longer list is a select",
+      "Chips narrow what is shown and can be dropped; they never collect typed input"
+    ],
+    "patternsExercised": [
+      "page-header",
+      "contact-form",
+      "callout"
+    ]
+  },
+  "blocks": [
+    {
+      "id": "fm-header",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 8,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "fm-title",
+          "type": "heading",
+          "props": {
+            "text": "Forms and choice",
+            "level": "h1"
+          }
+        },
+        {
+          "id": "fm-sub",
+          "type": "text",
+          "props": {
+            "content": "Inputs, a select, a segmented control and filter chips inside one form.",
+            "color": "var(--pw-color-text-muted)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fm-form-band",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "fm-form-band-h",
+          "type": "heading",
+          "props": {
+            "text": "Notification settings",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "fm-form",
+          "type": "form",
+          "props": {
+            "submitLabel": "Save settings",
+            "method": "POST"
+          },
+          "children": [
+            {
+              "id": "fm-email",
+              "type": "input",
+              "props": {
+                "type": "email",
+                "name": "email",
+                "label": "Email",
+                "placeholder": "you@example.com",
+                "required": true
+              }
+            },
+            {
+              "id": "fm-frequency",
+              "type": "select",
+              "props": {
+                "name": "frequency",
+                "label": "How often",
+                "options": [
+                  {
+                    "value": "instant",
+                    "label": "As it happens"
+                  },
+                  {
+                    "value": "daily",
+                    "label": "Once a day"
+                  },
+                  {
+                    "value": "weekly",
+                    "label": "Once a week"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "fm-channel",
+              "type": "segmented-control",
+              "props": {
+                "name": "channel",
+                "label": "Channel",
+                "options": [
+                  {
+                    "value": "email",
+                    "label": "Email"
+                  },
+                  {
+                    "value": "push",
+                    "label": "Push"
+                  },
+                  {
+                    "value": "both",
+                    "label": "Both"
+                  }
+                ],
+                "value": "email"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fm-filters",
+      "type": "section",
+      "props": {
+        "padding": 40,
+        "gap": 16,
+        "maxWidth": 960
+      },
+      "children": [
+        {
+          "id": "fm-filters-h",
+          "type": "heading",
+          "props": {
+            "text": "Topics you follow",
+            "level": "h2"
+          }
+        },
+        {
+          "id": "fm-chips",
+          "type": "container",
+          "props": {
+            "direction": "row",
+            "gap": 8,
+            "wrap": true
+          },
+          "children": [
+            {
+              "id": "fm-chip-1",
+              "type": "chip",
+              "props": {
+                "label": "Releases",
+                "selected": true,
+                "removable": true,
+                "count": 12
+              }
+            },
+            {
+              "id": "fm-chip-2",
+              "type": "chip",
+              "props": {
+                "label": "Security",
+                "tone": "warning",
+                "count": 3
+              }
+            },
+            {
+              "id": "fm-chip-3",
+              "type": "chip",
+              "props": {
+                "label": "Community",
+                "count": 28
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

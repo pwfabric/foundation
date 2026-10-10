@@ -1,0 +1,37 @@
+{
+  "name": "faq",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "FAQ section — counterpart of the panel/faq block: the accordion block with items does the same job (the faq block was merely a data-shaped accordion; on the help page the repeater had won in practice).",
+  "provenPattern": "Converted from a block to a composition under the rule 'arrangement-only → template'; the look was ported from the former block component.",
+  "knowledge": {
+    "purpose": "A frequently-asked-questions section built on the accordion",
+    "useCases": [
+      "Handling objections after the pricing band",
+      "Quick answers in product documentation",
+      "Removing hesitation before the sign-up form"
+    ],
+    "composesWith": [
+      "callout",
+      "container.accordion"
+    ],
+    "antiPatterns": [
+      "Starting with every question open — the accordion's job is to shorten the page",
+      "More than ten questions — the list becomes a scanning load; split by topic",
+      "Writing the question as a heading and the answer like a heading too — the hierarchy is lost"
+    ]
+  },
+  "placeholders": {
+    "{{FAQ_ITEMS}}": "accordion.props.items — {title: question, content: answer}[] array"
+  },
+  "usesBlocks": [
+    "accordion"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "accordion",
+    "props": {
+      "items": "{{FAQ_ITEMS}}"
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "name": "shell-topbar-dense",
+  "role": "shell",
+  "description": "Top navigation + context row + one dense work area. No footer.",
+  "provenPattern": "Shell matrix — chrome × body: 5 chromes × 4 bodies = 20, four eliminated (with no chrome a grid has no way out, a dense surface has no interaction, a split refutes itself) → 16 cells.",
+  "knowledge": {
+    "purpose": "The frame of a tool with few areas: navigation on top, the rest of the screen belongs to the data",
+    "useCases": [
+      "Single-topic admin screen (orders, tickets)",
+      "Report and table screen",
+      "Search-results work area"
+    ],
+    "composesWith": [
+      "weave-notice",
+      "page-header"
+    ],
+    "antiPatterns": [
+      "Adding a footer — there is nothing to read under a dense work area",
+      "Skipping the context row — it is the only place the user learns where they are",
+      "More than five top-level areas — then navigation belongs in a left rail"
+    ]
+  },
+  "mobileCollapse": "The top bar collapses into a drawer; links are listed in one column. The context row collapses into the heading; tables turn into card rows instead of scrolling horizontally.",
+  "placeholders": {
+    "{{HEADER}}": "top bar — brand name",
+    "{{NAV_LINKS}}": "top-bar links: [{label, href}]",
+    "{{CRUMBS}}": "context row: [{label, href?}]",
+    "{{MAIN}}": "main slot — the bands and weaves of the page sit here, in reading order",
+    "{{LEGAL}}": "copyright / legal line — PLAIN TEXT, one line (e.g. \"© 2026 Acme Ltd.\"). The ONLY place the copyright appears: the `footer` band carries link columns and never a copyright. Leave it empty (\"\") for none"
+  },
+  "usesBlocks": [
+    "breadcrumb",
+    "container",
+    "navbar",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "padding": 0
+    },
+    "layout": {
+      "widthScope": {
+        "xs": "viewport"
+      }
+    },
+    "children": [
+      {
+        "id": "{{ID}}-nav",
+        "type": "navbar",
+        "props": {
+          "logoText": "{{HEADER}}",
+          "links": "{{NAV_LINKS}}",
+          "sticky": true
+        },
+        "layout": {
+          "widthScope": {
+            "xs": "viewport"
+          }
+        }
+      },
+      {
+        "id": "{{ID}}-content",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "style": {
+          "width": "100%",
+          "maxWidth": "var(--pw-layout-container-max-width, 1280px)",
+          "marginInline": "auto",
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))",
+          "boxSizing": "border-box"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-crumb",
+            "type": "breadcrumb",
+            "props": {
+              "items": "{{CRUMBS}}"
+            }
+          },
+          {
+            "id": "{{ID}}-main",
+            "type": "container",
+            "props": {
+              "direction": "column"
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-legal",
+        "type": "text",
+        "props": {
+          "content": "{{LEGAL}}",
+          "textAlign": "center",
+          "color": "var(--pw-color-text-muted)"
+        },
+        "style": {
+          "fontSize": "0.8rem",
+          "padding": "16px"
+        }
+      }
+    ]
+  },
+  "chrome": "topbar",
+  "body": "dense",
+  "layoutOnly": true
+}

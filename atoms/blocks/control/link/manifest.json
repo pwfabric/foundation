@@ -1,0 +1,164 @@
+{
+  "id": "control.link",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "control",
+  "name": "link",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Inline hyperlink for text-flow navigation (internal route or external URL)",
+    "useCases": [
+      "In-line cross-reference inside a paragraph",
+      "Footer link list",
+      "Breadcrumb segment"
+    ],
+    "composesWith": [
+      "text.text",
+      "text.heading",
+      "control.breadcrumb",
+      "layout.navbar",
+      "platform/navigation"
+    ],
+    "antiPatterns": [
+      "Primary call-to-action — use control.button",
+      "Form submit — use control.button (type=submit)",
+      "Block-level clickable area — wrap a layout.container with a navigation rule"
+    ],
+    "implementation": "Further use cases:\n- External documentation pointer"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "target",
+        "type": "\"_self\" | \"_blank\" | \"_parent\" | \"_top\"",
+        "required": false,
+        "default": "_self",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "_self",
+            "_blank",
+            "_parent",
+            "_top"
+          ],
+          "default": "_self"
+        },
+        "bindable": false
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "underline",
+        "type": "\"always\" | \"hover\" | \"none\"",
+        "required": false,
+        "default": "hover",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "always",
+            "hover",
+            "none"
+          ],
+          "default": "hover"
+        },
+        "bindable": false
+      },
+      {
+        "name": "fontSize",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 8,
+          "maximum": 96
+        },
+        "bindable": false
+      },
+      {
+        "name": "fontWeight",
+        "type": "\"normal\" | \"medium\" | \"semibold\" | \"bold\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "medium",
+            "semibold",
+            "bold"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "external",
+        "type": "boolean",
+        "required": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "description": "true → opens in a new tab (target=_blank + rel)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "Icon name from the shared icon set, drawn beside the text."
+        },
+        "bindable": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false,
+        "description": "Screen-reader label, for when the visible text is not enough.",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "text": "",
+      "target": "_self",
+      "underline": "hover"
+    },
+    "canHaveChildren": false,
+    "icon": "🔗",
+    "traits": [
+      "inline"
+    ]
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

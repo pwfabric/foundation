@@ -1,0 +1,84 @@
+{
+  "name": "feature-card",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "Feature card: icon + heading + description + link. Composition counterpart of the former panel/feature-card block — the docs knowledge-base cards were converted to this arrangement (live example).",
+  "provenPattern": "Converted from a block to a composition under the rule 'arrangement-only → template'; the look was ported from the former block component.",
+  "knowledge": {
+    "purpose": "Feature card of icon, heading, description and link",
+    "useCases": [
+      "A single cell of the feature grid",
+      "Knowledge-base entry card",
+      "Service-item introduction"
+    ],
+    "composesWith": [
+      "card-grid",
+      "icon-chip",
+      "container.card"
+    ],
+    "antiPatterns": [
+      "Labelling the link with a word like \"More\" that does not say where it goes",
+      "Writing the description longer than two lines — the card falls out of alignment in the grid",
+      "Picking an icon outside the icon canon — it renders as an empty circle"
+    ]
+  },
+  "placeholders": {
+    "{{ICON}}": "icon name",
+    "{{HEADING}}": "title",
+    "{{TEXT}}": "description",
+    "{{CTA_LABEL}}": "link.text",
+    "{{CTA_HREF}}": "link.href"
+  },
+  "usesBlocks": [
+    "card",
+    "icon",
+    "heading",
+    "text",
+    "link"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "card",
+    "props": {
+      "padding": 16,
+      "gap": 10,
+      "shadow": "sm"
+    },
+    "children": [
+      {
+        "id": "{{ID}}-icon",
+        "type": "icon",
+        "props": {
+          "name": "{{ICON}}",
+          "size": 28,
+          "color": "var(--pw-color-primary)"
+        }
+      },
+      {
+        "id": "{{ID}}-heading",
+        "type": "heading",
+        "props": {
+          "text": "{{HEADING}}",
+          "level": "h3"
+        }
+      },
+      {
+        "id": "{{ID}}-text",
+        "type": "text",
+        "props": {
+          "content": "{{TEXT}}",
+          "color": "var(--pw-color-text-muted)"
+        }
+      },
+      {
+        "id": "{{ID}}-link",
+        "type": "link",
+        "props": {
+          "text": "{{CTA_LABEL}}",
+          "href": "{{CTA_HREF}}",
+          "color": "var(--pw-color-primary-ink, var(--pw-color-text-on-card, var(--pw-color-primary)))"
+        }
+      }
+    ]
+  }
+}

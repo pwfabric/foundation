@@ -1,0 +1,135 @@
+{
+  "name": "shell-topbar-flow",
+  "role": "shell",
+  "description": "Top navigation + a vertical stack of bands + rich footer. The bar and the footer span the screen; the bands sit in the measured content column (theme width, page gutter). The visitor reads by scrolling.",
+  "provenPattern": "Shell matrix — chrome × body: 5 chromes × 4 bodies = 20, four eliminated (with no chrome a grid has no way out, a dense surface has no interaction, a split refutes itself) → 16 cells.",
+  "knowledge": {
+    "purpose": "The frame of a page read by scrolling down: navigation is secondary, the bands tell the story in order",
+    "useCases": [
+      "Corporate marketing site",
+      "Campaign landing page",
+      "Product narrative page"
+    ],
+    "composesWith": [
+      "page-header",
+      "card-grid",
+      "contact-form",
+      "footer"
+    ],
+    "antiPatterns": [
+      "Turning the main region into a widget grid — that is the shell-topbar-grid cell",
+      "Adding a persistent left rail — a stack of bands is not read alongside a rail; that is the composite shell",
+      "More than two conversion bands — emphasis scatters"
+    ]
+  },
+  "mobileCollapse": "The top bar collapses into a drawer; links are listed in one column. Bands are already single-column; order is kept.",
+  "placeholders": {
+    "{{HEADER}}": "top bar — brand name",
+    "{{NAV_LINKS}}": "top-bar links: [{label, href}]",
+    "{{FOOTER}}": "footer copyright line — PLAIN TEXT, one line. The ONLY place the copyright appears: the `footer` band carries link columns and never a copyright. A rich footer (columns, social) does not go here — place the `footer` pattern as the last band",
+    "{{MAIN}}": "main slot — the bands and weaves of the page sit here, in reading order"
+  },
+  "usesBlocks": [
+    "container",
+    "divider",
+    "navbar",
+    "section",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "padding": 0
+    },
+    "layout": {
+      "widthScope": {
+        "xs": "viewport"
+      }
+    },
+    "children": [
+      {
+        "id": "{{ID}}-nav",
+        "type": "navbar",
+        "props": {
+          "logoText": "{{HEADER}}",
+          "links": "{{NAV_LINKS}}",
+          "sticky": true
+        },
+        "layout": {
+          "widthScope": {
+            "xs": "viewport"
+          }
+        }
+      },
+      {
+        "id": "{{ID}}-content",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "style": {
+          "width": "100%",
+          "maxWidth": "var(--pw-layout-container-max-width, 1280px)",
+          "marginInline": "auto",
+          "paddingInline": "max(16px, var(--pw-layout-surface-padding, 24px))",
+          "boxSizing": "border-box"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-main",
+            "type": "container",
+            "props": {
+              "direction": "column"
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-foot",
+        "type": "section",
+        "props": {
+          "paddingY": 40,
+          "gap": 18
+        },
+        "children": [
+          {
+            "id": "{{ID}}-foot-div",
+            "type": "divider",
+            "props": {
+              "spacing": 12
+            }
+          },
+          {
+            "id": "{{ID}}-foot-bot",
+            "type": "container",
+            "props": {
+              "direction": "row",
+              "justify": "between",
+              "gap": 12,
+              "padding": 0
+            },
+            "children": [
+              {
+                "id": "{{ID}}-foot-c",
+                "type": "text",
+                "props": {
+                  "content": "{{FOOTER}}",
+                  "color": "var(--pw-color-text-muted)"
+                },
+                "style": {
+                  "fontSize": "0.8rem"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "chrome": "topbar",
+  "body": "flow",
+  "layoutOnly": true
+}

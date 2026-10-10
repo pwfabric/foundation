@@ -1,0 +1,81 @@
+{
+  "name": "callout-row",
+  "role": "band",
+  "body": "flow",
+  "layoutOnly": true,
+  "description": "Alert row: a tip or attention box that breaks the text flow.",
+  "provenPattern": "Derived from 28 real requests that had been met with hand-built workarounds — the band counterpart of those arrangements.",
+  "knowledge": {
+    "purpose": "Showing a rule's exception or hazard inline",
+    "useCases": [
+      "Policy exception",
+      "Setup warning",
+      "Prerequisite note"
+    ],
+    "composesWith": [
+      "callout"
+    ],
+    "antiPatterns": [
+      "Several alerts in one section — when all are emphasised, none is",
+      "Writing the warning like an info note — severity must be distinguishable",
+      "Putting the warning at the end of the section — it is passed unread"
+    ]
+  },
+  "mobileCollapse": "Full width; the icon moves above the text.",
+  "placeholders": {
+    "{{ID}}": "block id prefix",
+    "{{TITLE}}": "callout.title",
+    "{{BODY}}": "callout.content"
+  },
+  "usesBlocks": [
+    "card",
+    "container",
+    "heading",
+    "section",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "section",
+    "props": {},
+    "children": [
+      {
+        "id": "{{ID}}-c",
+        "type": "container",
+        "props": {
+          "direction": "column"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-c2",
+            "type": "card",
+            "props": {
+              "padding": 16,
+              "gap": 8
+            },
+            "style": {
+              "borderLeft": "4px solid var(--pw-color-primary)"
+            },
+            "children": [
+              {
+                "id": "{{ID}}-c2-t",
+                "type": "heading",
+                "props": {
+                  "text": "{{TITLE}}",
+                  "level": "h4"
+                }
+              },
+              {
+                "id": "{{ID}}-c2-c",
+                "type": "text",
+                "props": {
+                  "content": "{{BODY}}"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

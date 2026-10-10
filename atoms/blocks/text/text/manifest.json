@@ -1,0 +1,137 @@
+{
+  "id": "text.text",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "text",
+  "name": "text",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Generic paragraph or inline text with theme-aware styling",
+    "useCases": [
+      "Body paragraph inside an article",
+      "Field description below a form input",
+      "Caption beneath an image or stat"
+    ],
+    "composesWith": [
+      "layout.container",
+      "layout.section",
+      "container.card",
+      "text.heading",
+      "control.link"
+    ],
+    "antiPatterns": [
+      "Headings or titles — use text.heading",
+      "Status banner — use text.alert",
+      "Code — use text.prose, which renders inline and fenced code"
+    ],
+    "implementation": "Further use cases:\n- Footer copyright line\n\nhideWhenSet: a brand name beside an optional logo carries hideWhenSet \"{{LOGO}}\" — drawn only when there is no logo (the shell patterns do this). It is a value, not an expression."
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "content",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "fontSize",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 8,
+          "maximum": 96,
+          "description": "Size in px. Omit it: the text follows the theme body size (--pw-font-size-base)."
+        },
+        "bindable": false
+      },
+      {
+        "name": "fontWeight",
+        "type": "\"normal\" | \"medium\" | \"semibold\" | \"bold\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "medium",
+            "semibold",
+            "bold"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "textAlign",
+        "type": "\"left\" | \"center\" | \"right\" | \"justify\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right",
+            "justify"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "lineHeight",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false
+      },
+      {
+        "name": "maxLines",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number",
+          "minimum": 1
+        },
+        "bindable": false
+      },
+      {
+        "name": "hideWhenSet",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "description": "A plain value, not an expression: when it is non-empty the text is not drawn. For a brand name beside a logo that already carries it: \"{{LOGO}}\". An unfilled {{SLOT}} counts as empty, so the text shows."
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "content": ""
+    },
+    "canHaveChildren": false,
+    "icon": "T",
+    "traits": [
+      "form-content",
+      "inline",
+      "modal-content"
+    ]
+  },
+  "tags": [
+    "tier:content"
+  ]
+}

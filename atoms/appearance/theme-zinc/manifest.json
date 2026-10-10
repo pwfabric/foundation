@@ -1,0 +1,122 @@
+{
+  "id": "theme-zinc",
+  "kind": "ui-appearance",
+  "version": "1.0.1",
+  "category": "ui",
+  "name": "Zinc",
+  "state": "stable",
+  "description": "Neutral zinc — white ground, thin border, dark neutral primary. The shadcn/ui identity.",
+  "tags": [
+    "theme",
+    "appearance",
+    "light"
+  ],
+  "theme": {
+    "colors": {
+      "primary": "#18181b",
+      "secondary": "#f4f4f5",
+      "accent": "#f4f4f5",
+      "background": "#ffffff",
+      "card": "#ffffff",
+      "text": "#09090b",
+      "textMuted": "#71717a",
+      "border": "#e4e4e7",
+      "error": "#dc2626",
+      "success": "#16a34a",
+      "warning": "#d97706",
+      "info": "#2563eb",
+      "textOnPrimary": "#fafafa",
+      "surface": "#fafafa"
+    },
+    "border": {
+      "radius": "8px",
+      "width": "1px",
+      "style": "solid",
+      "radiusLarge": "12px",
+      "radiusSmall": "6px",
+      "radiusXl": "16px",
+      "radius2xl": "16px",
+      "radiusFull": "9999px"
+    },
+    "typography": {
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "headingFontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "monoFontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+      "baseFontSize": "16px",
+      "headingWeight": "600",
+      "headingLineHeight": "1.25",
+      "letterSpacing": "-0.025em",
+      "bodyLineHeight": "1.6",
+      "fontSizeSm": "14px",
+      "fontSizeXs": "12px",
+      "fontSizeLg": "18px",
+      "fontSizeXl": "20px",
+      "fontSize2xl": "24px",
+      "fontSize3xl": "30px",
+      "fontSize4xl": "36px",
+      "bodyWeight": "400",
+      "bodyLetterSpacing": "0em"
+    },
+    "spacing": {
+      "base": "1rem",
+      "xs": "0.25rem",
+      "sm": "0.5rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "xxl": "3rem"
+    },
+    "shadows": {
+      "card": "0 1px 2px 0 rgba(0,0,0,.05)",
+      "button": "none",
+      "sm": "0 1px 2px 0 rgba(0,0,0,.05)",
+      "md": "0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1)",
+      "lg": "0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1)",
+      "xl": "0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1)"
+    },
+    "motion": {
+      "durationFast": "150ms",
+      "durationNormal": "200ms",
+      "durationSlow": "300ms",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easingBounce": "cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+    },
+    "layout": {
+      "gap": "0px",
+      "padding": "0px",
+      "containerMaxWidth": "1440px",
+      "gridGap": "24px",
+      "sectionPaddingY": "clamp(2.5rem, 5vw, 4rem)",
+      "sectionPaddingX": "clamp(1rem, 3vw, 1.5rem)"
+    },
+    "focus": {
+      "ringColor": "#71717a",
+      "ringWidth": "2px",
+      "ringOffset": "2px"
+    },
+    "zIndex": {
+      "sticky": 150,
+      "nav": 200,
+      "dropdown": 300,
+      "drawer": 400,
+      "modal": 500,
+      "toast": 540
+    }
+  },
+  "knowledge": {
+    "purpose": "Zinc theme — system sans, neutral reference. A complete token set: palette, heading and body voice, corner radius scale, spacing rhythm and motion; a surface wears it whole.",
+    "useCases": [
+      "Giving a surface the Zinc look (from the theme picker)",
+      "Pick it as a starting point and edit token values one by one"
+    ],
+    "composesWith": [
+      "platform/persistence",
+      "platform/entities",
+      "platform/navigation"
+    ],
+    "antiPatterns": [
+      "Pinning colours in block props — theme tokens already cascade",
+      "Expecting two themes on one surface — a surface carries a single token set"
+    ]
+  }
+}

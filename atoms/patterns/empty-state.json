@@ -1,0 +1,85 @@
+{
+  "name": "empty-state",
+  "role": "part",
+  "layoutOnly": true,
+  "description": "Empty-state region: icon + heading + description + optional CTA. Composition counterpart of the former data/empty-state block — the real empty-state work is done by repeater/table with their own emptyText; this is for page-level empty regions.",
+  "provenPattern": "Converted to a composition under the rule 'arrangement-only → template'.",
+  "knowledge": {
+    "purpose": "Meets a page-level empty region with icon, heading, description and an optional action",
+    "useCases": [
+      "A page with no content produced yet",
+      "No-search-results region",
+      "A new user's first screen"
+    ],
+    "composesWith": [
+      "callout",
+      "control.button"
+    ],
+    "antiPatterns": [
+      "Using it for an empty list or table — that is repeater/table emptyText's job",
+      "Writing only \"No data\" — an empty state must say what to do",
+      "Eylem vaat edip buton koymamak"
+    ]
+  },
+  "placeholders": {
+    "{{ICON}}": "icon name",
+    "{{TITLE}}": "title",
+    "{{BODY}}": "description",
+    "{{CTA_LABEL}}": "button.label",
+    "{{CTA_HREF}}": "button.href"
+  },
+  "usesBlocks": [
+    "container",
+    "icon",
+    "heading",
+    "text",
+    "button"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column",
+      "gap": 10,
+      "align": "center",
+      "padding": 32
+    },
+    "children": [
+      {
+        "id": "{{ID}}-icon",
+        "type": "icon",
+        "props": {
+          "name": "{{ICON}}",
+          "size": 36,
+          "color": "var(--pw-color-text-muted)"
+        }
+      },
+      {
+        "id": "{{ID}}-title",
+        "type": "heading",
+        "props": {
+          "text": "{{TITLE}}",
+          "level": "h3"
+        }
+      },
+      {
+        "id": "{{ID}}-body",
+        "type": "text",
+        "props": {
+          "content": "{{BODY}}",
+          "color": "var(--pw-color-text-muted)",
+          "textAlign": "center"
+        }
+      },
+      {
+        "id": "{{ID}}-cta",
+        "type": "button",
+        "props": {
+          "label": "{{CTA_LABEL}}",
+          "href": "{{CTA_HREF}}",
+          "variant": "outline"
+        }
+      }
+    ]
+  }
+}

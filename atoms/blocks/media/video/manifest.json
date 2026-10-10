@@ -1,0 +1,135 @@
+{
+  "id": "media.video",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "media",
+  "name": "video",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Video player block (HTML5 / external URL) with poster, autoplay, and control settings",
+    "useCases": [
+      "Marketing hero video background",
+      "Product demo or onboarding clip",
+      "Embedded testimonial"
+    ],
+    "composesWith": [
+      "layout.section",
+      "container.card"
+    ],
+    "antiPatterns": [
+      "YouTube / Vimeo embed — use an embed block from a pack built on foundation",
+      "Animated GIF — embed via media.image instead"
+    ],
+    "implementation": "Operational constraints (install, permissions, polling, read-only scope):\n- Audio-only — out of scope for this block\n\nFurther use cases:\n- Short tutorial inside a doc surface"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "src",
+        "type": "string",
+        "required": true,
+        "default": "",
+        "jsonSchema": {
+          "type": "string",
+          "default": ""
+        },
+        "bindable": false
+      },
+      {
+        "name": "autoplay",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "controls",
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": true
+        },
+        "bindable": false
+      },
+      {
+        "name": "loop",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "muted",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "jsonSchema": {
+          "type": "boolean",
+          "default": false
+        },
+        "bindable": false
+      },
+      {
+        "name": "poster",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "aspectRatio",
+        "type": "number | string",
+        "required": false,
+        "default": "16/9",
+        "description": "CSS aspect-ratio for the player. Accepts the legacy colon presets ('16:9'|'4:3'|'1:1') AND any CSS aspect-ratio string ('16/9', '4/3', '1/1', '21/9', '3/2') or a number. Colon forms are normalised to the CSS '/' form.",
+        "jsonSchema": {
+          "type": "string",
+          "default": "16/9",
+          "examples": [
+            "16/9",
+            "4/3",
+            "1/1",
+            "21/9",
+            "3/2"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "src": "",
+      "autoplay": false,
+      "controls": true,
+      "loop": false,
+      "muted": false,
+      "aspectRatio": "16/9"
+    },
+    "canHaveChildren": false,
+    "icon": "▶",
+    "traits": []
+  },
+  "tags": [
+    "tier:widget"
+  ]
+}

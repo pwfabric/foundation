@@ -1,0 +1,62 @@
+{
+  "name": "page-header",
+  "role": "band",
+  "description": "Page opening band: breadcrumb + title + subtitle. The composition equivalent of the retired layout/page-header block — a background is asked for by wrapping it in a section (lesson 023: no invisible background default).",
+  "provenPattern": "Converted from a block to a composition under the rule 'arrangement-only → template'.",
+  "knowledge": {
+    "purpose": "The opening band of every page other than the home page",
+    "useCases": [
+      "Detay sayfasi basligi",
+      "Liste sayfasi basligi",
+      "Greeting header: a personal salutation + the day's summary (former greeting-header)"
+    ],
+    "composesWith": [
+      "layout.section"
+    ],
+    "antiPatterns": [
+      "Ayni sayfada iki page-header",
+      "Zemini pattern icine gommek — zemin section kararidir"
+    ]
+  },
+  "placeholders": {
+    "{{TITLE}}": "baslik",
+    "{{SUB}}": "alt baslik"
+  },
+  "usesBlocks": [
+    "section",
+    "heading",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "section",
+    "props": {
+      "paddingY": 28,
+      "gap": 6,
+      "textAlign": "left"
+    },
+    "children": [
+      {
+        "id": "{{ID}}-t",
+        "type": "heading",
+        "props": {
+          "text": "{{TITLE}}",
+          "level": "h1",
+          "textAlign": "left"
+        }
+      },
+      {
+        "id": "{{ID}}-s",
+        "type": "text",
+        "props": {
+          "content": "{{SUB}}",
+          "color": "var(--pw-color-text-muted)",
+          "textAlign": "left"
+        }
+      }
+    ]
+  },
+  "mobileCollapse": "Single column; title and subtitle stacked — no change.",
+  "body": "flow",
+  "layoutOnly": true
+}

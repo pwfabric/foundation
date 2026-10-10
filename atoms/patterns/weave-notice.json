@@ -1,0 +1,43 @@
+{
+  "name": "weave-notice",
+  "role": "weave",
+  "layoutOnly": true,
+  "bodies": [
+    "flow",
+    "dense",
+    "grid"
+  ],
+  "description": "Reports a state: icon → what happened → way out.",
+  "provenPattern": "From the compatibility matrix: the shells this arrangement is legal on were determined from real page layouts.",
+  "knowledge": {
+    "purpose": "The spine that reports a state and sets the user on their way",
+    "useCases": [
+      "404",
+      "Empty state",
+      "Maintenance notice"
+    ],
+    "composesWith": [
+      "empty-state",
+      "callout"
+    ],
+    "antiPatterns": [
+      "Writing only \"an error occurred\" — what to do must be said",
+      "Offering no way out"
+    ]
+  },
+  "mobileCollapse": "Unchanged; already single-column and centred.",
+  "placeholders": {
+    "{{BANDS}}": "the bands of the spine, in order"
+  },
+  "usesBlocks": [
+    "container"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "container",
+    "props": {
+      "direction": "column"
+    },
+    "children": []
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "id": "layout.section",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "layout",
+  "name": "section",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Full-bleed page band with constrained inner max-width — the canonical wrapper for a marketing or content row",
+    "useCases": [
+      "Hero — ONE section containing a badge + heading + text + buttons as inline children",
+      "Feature row — ONE section containing a heading + a grid of cards inline",
+      "Footer band — ONE section containing link groups + copyright text inline"
+    ],
+    "composesWith": [
+      "layout.container",
+      "layout.grid",
+      "text.heading",
+      "text.text",
+      "control.button",
+      "media.image"
+    ],
+    "antiPatterns": [
+      "Tight inline grouping of a few blocks — use layout.container",
+      "Nesting sections inside other sections",
+      "Form layouts — use form.form + layout.container"
+    ],
+    "implementation": "Further anti-patterns:\n- Scaffolding an empty section then filling it in a later step — build the section COMPLETE with its children inline in one step (an empty + filled pair renders a blank duplicate)\n\nFurther use cases:\n- Visually separated content area with its own background colour"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "paddingY",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false
+      },
+      {
+        "name": "paddingX",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false
+      },
+      {
+        "name": "padding",
+        "type": "number",
+        "required": false,
+        "jsonSchema": {
+          "type": "number"
+        },
+        "bindable": false
+      },
+      {
+        "name": "gap",
+        "type": "number",
+        "required": false,
+        "default": 16,
+        "jsonSchema": {
+          "type": "number",
+          "default": 16
+        },
+        "bindable": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "required": false,
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      },
+      {
+        "name": "backgroundGradient",
+        "type": "{ from: string; to: string; via?: string; direction?: string; type?: \"linear\" | \"radial\" | \"conic\"; at?: string; angle?: number }",
+        "required": false,
+        "description": "Themeable gradient background. Color stops are theme color roles (primary/accent/background/…) resolved to var(--pw-color-*), so the gradient follows a theme recolour. Supports linear, radial (orb/glow), and conic (angular sweep). Prefer this over a pinned block.style gradient.",
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "color role (primary/accent/…) or token/raw value"
+            },
+            "to": {
+              "type": "string",
+              "description": "color role or token/raw value"
+            },
+            "via": {
+              "type": "string",
+              "description": "optional middle stop"
+            },
+            "direction": {
+              "type": "string",
+              "description": "linear direction, e.g. 135deg or 'to right' (default 135deg)"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "linear",
+                "radial",
+                "conic"
+              ],
+              "description": "linear (default), radial (orb/glow), or conic (angular sweep)"
+            },
+            "at": {
+              "type": "string",
+              "description": "radial/conic focal point, e.g. '50% 40%' (default '50% 50%')"
+            },
+            "angle": {
+              "type": "number",
+              "description": "conic start angle in degrees (default 0); ignored for linear/radial"
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "backdropBlur",
+        "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "Frosted-glass backdrop-blur for the section band (mirrors panel.card's glass). sm/md/lg → blur(4px|10px|20px); 'none' = no blur. Use over a gradient/image background.",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "textAlign",
+        "type": "\"left\" | \"center\" | \"right\"",
+        "required": false,
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "maxWidth",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "minHeight",
+        "type": "number | string",
+        "required": false,
+        "jsonSchema": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "bindable": false
+      },
+      {
+        "name": "aspectRatio",
+        "type": "number | string",
+        "required": false,
+        "description": "CSS aspect-ratio for the section band, e.g. '16/9', '4/3', '1/1', '21/9', '3/2', or a number. Sets the ratio without forcing a fixed height.",
+        "jsonSchema": {
+          "type": "string"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "gap": 16
+    },
+    "canHaveChildren": true,
+    "icon": "▦",
+    "traits": []
+  },
+  "tags": [
+    "tier:structure"
+  ]
+}

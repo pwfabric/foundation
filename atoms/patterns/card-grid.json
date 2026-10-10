@@ -1,0 +1,246 @@
+{
+  "name": "card-grid",
+  "role": "band",
+  "body": "flow",
+  "description": "Card grid — team, portfolio, service or case list. panel.card is a CONTAINER (it has no heading/text props); content goes in as children.",
+  "provenPattern": "A survey of 54 sector demo homepages: this band appears in 24 of them, mean vertical position 0.51 (0 = top of page, 1 = bottom). The surveyed sites add a hover/caption layer; this pattern has none yet, the arrangement is equivalent",
+  "knowledge": {
+    "purpose": "Page band presenting a team, portfolio, service or case list as a card grid",
+    "useCases": [
+      "Introducing a service list with image + heading + short text",
+      "Case-study or portfolio selection",
+      "Showing team members in a grid"
+    ],
+    "composesWith": [
+      "feature-card",
+      "page-header",
+      "footer"
+    ],
+    "antiPatterns": [
+      "Trying to give the card block heading/text props — card is a CONTAINER; content goes in as children",
+      "Leaving a card count that does not divide by the grid columns — a lone card on the last row breaks the balance",
+      "Leaving card images without alt text",
+      "A second card-grid band on the same page — repetition makes monotony, not rhythm"
+    ]
+  },
+  "mobileCollapse": "The grid collapses to single-column cards.",
+  "placeholders": {
+    "{{HEADING}}": "band heading",
+    "{{SUBHEADING}}": "text.content",
+    "{{IMAGE_1}}": "image.src",
+    "{{TITLE_1}}": "heading.text · image.alt",
+    "{{TEXT_1}}": "text.content",
+    "{{IMAGE_2}}": "image.src",
+    "{{TITLE_2}}": "heading.text · image.alt",
+    "{{TEXT_2}}": "text.content",
+    "{{IMAGE_3}}": "image.src",
+    "{{TITLE_3}}": "heading.text · image.alt",
+    "{{TEXT_3}}": "text.content"
+  },
+  "usesBlocks": [
+    "section",
+    "container",
+    "heading",
+    "grid",
+    "card",
+    "image",
+    "text"
+  ],
+  "snippet": {
+    "id": "{{ID}}",
+    "type": "section",
+    "props": {
+      "paddingY": 64,
+      "gap": 32
+    },
+    "children": [
+      {
+        "id": "{{ID}}-head",
+        "type": "container",
+        "props": {
+          "direction": "column",
+          "gap": 8,
+          "align": "center"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-h",
+            "type": "heading",
+            "props": {
+              "text": "{{HEADING}}",
+              "level": "h2",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "{{ID}}-sub",
+            "type": "text",
+            "props": {
+              "content": "{{SUBHEADING}}",
+              "color": "var(--pw-color-text-muted)",
+              "textAlign": "center"
+            }
+          }
+        ]
+      },
+      {
+        "id": "{{ID}}-grid",
+        "type": "grid",
+        "props": {
+          "columns": 3,
+          "gap": 24,
+          "alignItems": "stretch"
+        },
+        "children": [
+          {
+            "id": "{{ID}}-c1",
+            "type": "card",
+            "props": {
+              "padding": 0,
+              "gap": 0,
+              "shadow": "sm"
+            },
+            "children": [
+              {
+                "id": "{{ID}}-c1-img",
+                "type": "image",
+                "props": {
+                  "src": "{{IMAGE_1}}",
+                  "alt": "{{TITLE_1}}",
+                  "aspectRatio": "16/9",
+                  "objectFit": "cover"
+                }
+              },
+              {
+                "id": "{{ID}}-c1-body",
+                "type": "container",
+                "props": {
+                  "direction": "column",
+                  "gap": 8,
+                  "padding": 20
+                },
+                "children": [
+                  {
+                    "id": "{{ID}}-c1-h",
+                    "type": "heading",
+                    "props": {
+                      "text": "{{TITLE_1}}",
+                      "level": "h3"
+                    }
+                  },
+                  {
+                    "id": "{{ID}}-c1-t",
+                    "type": "text",
+                    "props": {
+                      "content": "{{TEXT_1}}",
+                      "color": "var(--pw-color-text-muted)",
+                      "fontSize": 14
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "{{ID}}-c2",
+            "type": "card",
+            "props": {
+              "padding": 0,
+              "gap": 0,
+              "shadow": "sm"
+            },
+            "children": [
+              {
+                "id": "{{ID}}-c2-img",
+                "type": "image",
+                "props": {
+                  "src": "{{IMAGE_2}}",
+                  "alt": "{{TITLE_2}}",
+                  "aspectRatio": "16/9",
+                  "objectFit": "cover"
+                }
+              },
+              {
+                "id": "{{ID}}-c2-body",
+                "type": "container",
+                "props": {
+                  "direction": "column",
+                  "gap": 8,
+                  "padding": 20
+                },
+                "children": [
+                  {
+                    "id": "{{ID}}-c2-h",
+                    "type": "heading",
+                    "props": {
+                      "text": "{{TITLE_2}}",
+                      "level": "h3"
+                    }
+                  },
+                  {
+                    "id": "{{ID}}-c2-t",
+                    "type": "text",
+                    "props": {
+                      "content": "{{TEXT_2}}",
+                      "color": "var(--pw-color-text-muted)",
+                      "fontSize": 14
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "{{ID}}-c3",
+            "type": "card",
+            "props": {
+              "padding": 0,
+              "gap": 0,
+              "shadow": "sm"
+            },
+            "children": [
+              {
+                "id": "{{ID}}-c3-img",
+                "type": "image",
+                "props": {
+                  "src": "{{IMAGE_3}}",
+                  "alt": "{{TITLE_3}}",
+                  "aspectRatio": "16/9",
+                  "objectFit": "cover"
+                }
+              },
+              {
+                "id": "{{ID}}-c3-body",
+                "type": "container",
+                "props": {
+                  "direction": "column",
+                  "gap": 8,
+                  "padding": 20
+                },
+                "children": [
+                  {
+                    "id": "{{ID}}-c3-h",
+                    "type": "heading",
+                    "props": {
+                      "text": "{{TITLE_3}}",
+                      "level": "h3"
+                    }
+                  },
+                  {
+                    "id": "{{ID}}-c3-t",
+                    "type": "text",
+                    "props": {
+                      "content": "{{TEXT_3}}",
+                      "color": "var(--pw-color-text-muted)",
+                      "fontSize": 14
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

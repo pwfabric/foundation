@@ -1,0 +1,82 @@
+{
+  "id": "control.breadcrumb",
+  "kind": "block",
+  "version": "1.0.0",
+  "category": "control",
+  "name": "breadcrumb",
+  "state": "stable",
+  "knowledge": {
+    "purpose": "Hierarchical trail of links showing the user position inside a nested surface tree",
+    "useCases": [
+      "Documentation site page header",
+      "Admin dashboard nested route indicator",
+      "File or folder navigation path"
+    ],
+    "composesWith": [
+      "layout.section",
+      "control.link",
+      "platform/navigation"
+    ],
+    "antiPatterns": [
+      "Linear step indicator — use the stepper pattern",
+      "Tab navigation — use form.segmented-control for sibling views",
+      "Breadcrumb on a single-page surface (no hierarchy)"
+    ],
+    "implementation": "Further use cases:\n- Multi-step onboarding step trail"
+  },
+  "definition": {
+    "props": [
+      {
+        "name": "items",
+        "type": "[{label, href}]",
+        "required": false,
+        "default": [],
+        "jsonSchema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "href": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label"
+            ]
+          },
+          "default": []
+        },
+        "bindable": true
+      },
+      {
+        "name": "separator",
+        "type": "\"/\" | \"›\" | \">\"",
+        "required": false,
+        "default": "/",
+        "jsonSchema": {
+          "type": "string",
+          "enum": [
+            "/",
+            "›",
+            ">"
+          ],
+          "default": "/"
+        },
+        "bindable": false
+      }
+    ],
+    "defaultProps": {
+      "items": [],
+      "separator": "/"
+    },
+    "canHaveChildren": false,
+    "icon": "›",
+    "traits": []
+  },
+  "tags": [
+    "tier:content"
+  ]
+}
