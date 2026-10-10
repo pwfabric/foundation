@@ -111,7 +111,7 @@ const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
  * `hashPack`, and this checks that by reading the written archive back.
  *
  * NOT THE DEFAULT, because the legacy wire still has readers the canonical one
- * would change: the platform's build-publish takes the listing's display name,
+ * would change: a publishing pipeline that reads it takes the display name,
  * description and `requires` (tokens and packs) from the package.json this
  * script writes, and a pack's `app/surfaces/` pages ship today as `surfaces/`
  * atoms where the canonical layout keeps them as an undeclared app. Flip the
@@ -205,7 +205,7 @@ for (const name of ['LICENSE', 'NOTICE']) {
 }
 
 // Identity only. Build tooling belongs to this workspace, not to the atom source
-// the marketplace receives.
+// a publishing pipeline receives.
 entries.push({
   path: 'package.json',
   content: Buffer.from(
@@ -236,4 +236,4 @@ console.log(`artifact  : ${outArg ? outPath : `dist/${slug}-${pkg.version}.tgz`}
 console.log(`sha256    : ${digest}`)
 console.log('')
 console.log('This is the RAW SOURCE tgz — the INPUT to publishing, not the published pack.')
-console.log('The server derives the real manifest and bundles atoms during build-publish.')
+console.log('A publishing pipeline derives the pack manifest from it and compiles the blocks.')
